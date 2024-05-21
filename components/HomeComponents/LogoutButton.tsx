@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { setAccessToken, setRefreshToken} from '../../store/actions';
+import { TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { setAccessToken, setRefreshToken } from '../../store/actions';
 import { useNavigation } from '@react-navigation/native';
+
 const LogoutButton = () => {
-  // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -19,20 +19,36 @@ const LogoutButton = () => {
         },
       });
 
-      // 로그아웃 성공 후 처리
       console.log('Logout successful:', response.data);
       dispatch(setAccessToken(""));
       dispatch(setRefreshToken(""));
       navigation.replace('Login');
     } catch (error) {
-      // 오류 처리
-      console.error('Error during logout:', error);
+      console.error('Error during logout:', error.response.data);
     }
   };
 
+  const confirmLogout = () => {
+    Alert.alert(
+      "로그아웃",
+      "정말 로그아웃하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel"
+        },
+        {
+          text: "확인",
+          onPress: handleLogout
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
-    <TouchableOpacity style={styles.buttonLocate} onPress={handleLogout}>
-      <Text style={styles.buttonText}>Log out</Text>
+    <TouchableOpacity style={styles.buttonLocate} onPress={confirmLogout}>
+      <Image source={require("../../assets/logout_button.png")} style={styles.logout_button} />
     </TouchableOpacity>
   );
 };
@@ -40,13 +56,13 @@ const LogoutButton = () => {
 const styles = StyleSheet.create({
   buttonLocate: {
     position: 'absolute',
-    top: '5%',
-    right: 20,
-    zIndex: 999, // 다른 요소 위로 버튼을 띄우기 위한 zIndex 설정
+    top: '7%',
+    left: 20,
+    zIndex: 999,
   },
-  buttonText: {
-    fontSize: 12,
-    color: 'black', // 텍스트 색상
+  logout_button: {
+    width: 30,
+    height: 30,
   },
 });
 

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
 
     character : {
-        marginTop : 60,
+        marginTop : '20%',
         width : 270,
         height : 250,
     }

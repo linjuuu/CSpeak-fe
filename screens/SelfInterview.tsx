@@ -4,7 +4,7 @@ import ChattingTopbar from "../components/InterviewComponents/ChattingTopbar";
 import SelfChattingBoard from "../components/InterviewComponents/SelfChattingBoard";
 import SelfFinishButton from "../components/InterviewComponents/SelfFinishButton";
 
-export default function Interview() {
+export default function SelfInterview() {
   const BackgroundImage = require("../assets/background2.png");
 
   return (

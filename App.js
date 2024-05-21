@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ChattingRetrieve from "./screens/ChattingRetrieve";
 import WriteSelfIntro from "./screens/WriteSelfIntro";
 import SelectTopic from "./screens/SelectTopic";
+import SelfInterview from "./screens/SelfInterview";
 
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
         <Stack.Screen name="ChattingRetrieve" component={ChattingRetrieve} options={{headerShown: false}}/>
         <Stack.Screen name="WriteSelfIntro" component={WriteSelfIntro} options={{headerShown: false}}/>
         <Stack.Screen name="SelectTopic" component={SelectTopic} options={{headerShown: false}}/>
-        <Stack.Screen name="SelfInterview" component={SelectTopic} options={{headerShown: false}}/>
+        <Stack.Screen name="SelfInterview" component={SelfInterview} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
 

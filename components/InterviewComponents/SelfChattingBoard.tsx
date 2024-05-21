@@ -21,7 +21,7 @@ interface ChatMessage {
 const ChattingBoard: React.FC = () => {
   const accessToken = useSelector((state: any) => state.accessToken);
   const initSelf =  useSelector((state: any) => state.initSelf);
-
+  const selfID = useSelector((state: any) => state.selfID);
   const flatListRef = useRef<FlatList<ChatMessage>>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { isUser: false, message: initSelf, index: "1" },
@@ -36,7 +36,7 @@ const ChattingBoard: React.FC = () => {
 
     try {
         //채팅방 고유ID 변수로 설정 필요함
-      const response = await axios.get(`http://localhost:8080/api/v1/member/chat/self_intro/66481cbf5f49e74239d76be5?client_answer=${newMessage}.`, {
+      const response = await axios.get(`http://localhost:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}.`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

@@ -38,6 +38,8 @@ const Login = () => {
                   console.error('서버 응답 내용:', error.response.data); // 서버 응답 내용 추가 출력
                   Alert.alert("Session expired", "Please log in again.");
               }
+          }else if (accessToken){
+                navigation.replace('Home');
           }
       };
       checkToken();
