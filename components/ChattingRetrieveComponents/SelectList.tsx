@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import SelfChattingList from './SelfChattingList'; // Replace with your actual file path
-import CSTopicChattingList from './CSTopicChattingList'; // Replace with your actual file path
 import CSChattingList from './CSChattingList'; // Replace with your actual file path
 import TopicList from './TopicList';
 

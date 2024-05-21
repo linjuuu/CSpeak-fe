@@ -1,4 +1,3 @@
-import { useFonts } from "expo-font";
 import { StyleSheet, Text } from "react-native";
 
 

@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
-import withRedux from "@/store/withRedux";
+import withRedux from "../../store/withRedux";
 
 const ChattingTopBar = () => {
   const topicCS = useSelector((state: any) => state.topicCS);

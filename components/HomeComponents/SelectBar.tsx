@@ -1,5 +1,4 @@
 import React, { useState } from'react';
-import { useRouter } from 'expo-router';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView } from'react-native';
 import ExplainText from './ExplainText';
 

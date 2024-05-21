@@ -1,17 +1,16 @@
 import { StyleSheet, Pressable, Image, View } from "react-native";
-import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
+import * as KakaoLogins from "@react-native-seoul/kakao-login";
 import axios from 'axios';
 import { setAccessToken, setRefreshToken, setUsername } from '../../store/actions';
 
 export default function LoginButton() {
     const ButtonImage = require('../../assets/login_button.png');
-    const router = useRouter();
     const dispatch = useDispatch();
 
     const kakaoLogin = async () => {
         console.log('카카오 로그인 버튼 눌림');
-        const token = {"accessToken": "GXilwyRGnYkfRNYH1iIcokR6cXJPAuAOAAAAAQo9dZsAAAGPk4E-TQGXonZVdqHq", "accessTokenExpiresAt": "2024-05-20 21:57:50", "idToken": "eyJraWQiOiI5ZjI1MmRhZGQ1ZjIzM2Y5M2QyZmE1MjhkMTJmZWEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1YWQ1MDFiNjc5NTllZjY1Y2Q2MTEyMTY1ZWU1YTc1NiIsInN1YiI6IjM0NjAyNzIwOTUiLCJhdXRoX3RpbWUiOjE3MTYxNjY2NzEsImlzcyI6Imh0dHBzOi8va2F1dGgua2FrYW8uY29tIiwibmlja25hbWUiOiLrhbjspIDsnbwiLCJleHAiOjE3MTYyMDk4NzEsImlhdCI6MTcxNjE2NjY3MSwicGljdHVyZSI6Imh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWcudHdnLnRodW1iLlIxMTB4MTEwIn0.n7GNqGDVObDKHNqKNlfzDmzEQjF1aaoPFfiE7LvS1nGg6koWfEt7j7CnEozvDjKapqtiMTQulsvtgk2054IzTemv5nP4eGI_ZkS9sH403dvpTinP85itO26fol6X3j1kuvhfzQryTk1xfqk3Q3lQZmu37G0l4uQ99qeKbUAQg1VE1s_csK3EFtNvU1y2qWU_qxtWJVkGF5-NbG0WVy_vNCKKKz3hZhRGL9w6t1pcZQgF2ZcgB7JjCLCz6HI6yallSj_zPuO6jOprz2h3r6jHsruXDtMOlkVeQNnSztUwdHB4skkNcC8FEbfXMBSJZnweiSuYT393-jucevyLy2Xb-A", "refreshToken": "-XvSAZB2zEZaftLPIblMYHpycxgzkOI0AAAAAgo9dZsAAAGPk4E-SQGXonZVdqHq", "refreshTokenExpiresAt": "2024-07-19 09:57:50", "scopes": ["profile_image", "openid", "profile_nickname"]};
+        const token = await KakaoLogins.login();
         const idToken = token.idToken;
         
         try {

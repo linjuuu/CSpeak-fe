@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Button, StyleSheet, ScrollView, Modal, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import withRedux from "@/store/withRedux";
+import withRedux from "../../store/withRedux";
 
 const SelfChattingList = () => {
     const accessToken = useSelector((state: any) => state.accessToken);

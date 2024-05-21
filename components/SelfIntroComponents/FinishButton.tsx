@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
-import withRedux from '@/store/withRedux';
-import { setInitSelf, setSelfID } from '@/store/actions';
+import withRedux from '../../store/withRedux';
+import { setInitSelf, setSelfID } from '../../store/actions';
 
 interface FinishButtonProps {
     introTitle: string;

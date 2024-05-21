@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import withRedux from '@/store/withRedux';
+import withRedux from '../../store/withRedux';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
 
 const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.

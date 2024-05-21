@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, StyleSheet, ScrollView, Text } from 'react-native';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import withRedux from '@/store/withRedux';
+import withRedux from '../../store/withRedux';
 
 const TopicList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);

@@ -1,11 +1,8 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   View,
-  ScrollView,
   Text,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
   FlatList,
@@ -13,7 +10,7 @@ import {
 import ChattingInputBar from "./ChattingInputBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import withRedux from "@/store/withRedux";
+import withRedux from "../../store/withRedux";
 
 interface ChatMessage {
   isUser: boolean;

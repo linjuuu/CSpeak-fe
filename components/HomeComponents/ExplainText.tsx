@@ -1,4 +1,4 @@
-import withRedux from "@/store/withRedux";
+import withRedux from "../../store/withRedux";
 import { Text,StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 

@@ -2,9 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import { Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'expo-router';
-import withRedux from '@/store/withRedux';
-import { setCsID, setInitCS, setTopicCS } from '@/store/actions';
+import withRedux from '../../store/withRedux';
+import { setCsID, setInitCS, setTopicCS } from '../../store/actions';
 
 interface TopicButtonProps {
   topic: string;
@@ -12,7 +11,6 @@ interface TopicButtonProps {
 }
 
 const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
-  const router = useRouter();
   const accessToken = useSelector((state: any) => state.accessToken);
   const dispatch = useDispatch();
   const callAPI = async (topic: string) => {
