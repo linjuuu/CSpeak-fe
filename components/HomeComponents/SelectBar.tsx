@@ -1,9 +1,10 @@
 import React, { useState } from'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView } from'react-native';
 import ExplainText from './ExplainText';
+import { useNavigation } from '@react-navigation/native';
 
 const SelectBar: React.FC = () => {
-  const router = useRouter();
+  const navigation = useNavigation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
@@ -18,17 +19,17 @@ const SelectBar: React.FC = () => {
             {
               image: require('../../assets/selectInterviewList.png'),
               text: '대화목록\n확인하기',
-              onPress: () => router.push('/ChattingRetrieve'),
+              onPress: () => navigation.navigate('ChattingRetrieve'),
             },
             {
               image: require('../../assets/selectIntroduce.png'),
               text: '자기소개서 \n면접 시작하기',
-              onPress: () => router.push('/WriteSelfIntro'),
+              onPress: () => navigation.navigate('WriteSelfIntro'),
             },
             {
               image: require('../../assets/selectCSInterview.png'),
               text: 'CS면접\n시작하기',
-              onPress: () => router.push('/SelectTopic'),
+              onPress: () => navigation.navigate('SelectTopic'),
             },
           ].map((button, index) => (
             <View key={index} style={[

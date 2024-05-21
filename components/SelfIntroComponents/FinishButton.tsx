@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { setInitSelf, setSelfID } from '../../store/actions';
+import { useNavigation } from '@react-navigation/native';
 
 interface FinishButtonProps {
     introTitle: string;
@@ -13,8 +14,8 @@ interface FinishButtonProps {
   const FinishButton: React.FC<FinishButtonProps> = ({ introTitle, introText }) => {
   
     const accessToken = useSelector((state: any) => state.accessToken);
-    const router = useRouter();
     const dispatch = useDispatch();
+    const navigation = useNavigation();
     
     const handlePress = async () => {
 
@@ -28,10 +29,10 @@ interface FinishButtonProps {
           console.log("채팅창 고유 ID : ", response.data.data.chatRoomId);
           dispatch(setSelfID(response.data.data.chatRoomId));
           dispatch(setInitSelf(response.data.data.question));
+          navigation.navigate('SelfInterview');
       } catch (error) {
-          console.error('Error while self intro in:', error);
+          console.error('Error while self intro in:', error.response.data);
       }
-      router.push('/SelfInterview');
     }
 
     return (

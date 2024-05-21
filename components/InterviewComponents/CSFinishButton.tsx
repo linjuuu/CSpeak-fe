@@ -8,7 +8,6 @@ const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const CsID = useSelector((state: any) => state.CsID);
-  const router = useRouter();
   const handleFinish = async () => {
     try {
       const response = await axios.post(`http://localhost:8080/api/v1/member/end/chat/cs/${CsID}`, {}, {
@@ -18,7 +17,6 @@ const SelfFinishButton = () => {
       });
 
       console.log('chatting finish :', response.data);
-      router.push('/Home');
     } catch (error) {
       // 오류 처리
       console.error('Error chatting finish :', error);

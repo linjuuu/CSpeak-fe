@@ -8,7 +8,6 @@ const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const selfID = useSelector((state: any) => state.selfID);
-  const router = useRouter();
   const handleFinish = async () => {
     console.log({selfID} , "의 채팅 종료");
     try {

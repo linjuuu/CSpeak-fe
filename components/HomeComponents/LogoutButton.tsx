@@ -21,7 +21,6 @@ const LogoutButton = () => {
       console.log('Logout successful:', response.data);
       dispatch(setAccessToken(""));
       dispatch(setRefreshToken(""));
-      router.push('/Login');
     } catch (error) {
       // 오류 처리
       console.error('Error during logout:', error);

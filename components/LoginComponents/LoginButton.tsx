@@ -3,13 +3,15 @@ import { useDispatch } from "react-redux";
 import * as KakaoLogins from "@react-native-seoul/kakao-login";
 import axios from 'axios';
 import { setAccessToken, setRefreshToken, setUsername } from '../../store/actions';
+import withRedux from "../../store/withRedux";
+import { useNavigation } from "@react-navigation/native";
 
-export default function LoginButton() {
+const LoginButton = () => {
     const ButtonImage = require('../../assets/login_button.png');
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const kakaoLogin = async () => {
-        console.log('카카오 로그인 버튼 눌림');
         const token = await KakaoLogins.login();
         const idToken = token.idToken;
         
@@ -25,9 +27,9 @@ export default function LoginButton() {
             dispatch(setRefreshToken(refreshToken));
             dispatch(setUsername(username));
             console.log(username, "로그인 성공");
-            router.push("/Home");
+            navigation.replace("Home");
         } catch (error) {
-            console.error('Error while logging in:', error);
+            console.error('Error while logging in:', error.response.data);
         }
     };
 
@@ -60,3 +62,5 @@ const styles = StyleSheet.create({
         borderRadius : 15,
     },
 });
+
+export default withRedux(LoginButton);

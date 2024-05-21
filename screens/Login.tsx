@@ -1,11 +1,13 @@
 import { StyleSheet, ImageBackground } from "react-native";
-import KakaoLoginButton from "../src/components/KakaoLoginButton";
+import AppLogo from "../components/LoginComponents/Applogo";
+import LoginButton from "../components/LoginComponents/LoginButton";
 export default function Login() {
-  const BackgroundImage = require("../src/assets/background.png");
+  const BackgroundImage = require("../assets/background1.png");
 
   return (
     <ImageBackground source={BackgroundImage} style={styles.background}>
-      <KakaoLoginButton />
+      <AppLogo/>
+      <LoginButton />
     </ImageBackground>
   );
 }
