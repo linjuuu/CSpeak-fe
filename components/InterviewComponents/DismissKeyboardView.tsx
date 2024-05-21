@@ -14,7 +14,7 @@ interface DismissKeyboardViewProps {
 
 const DismissKeyboardView = ({ children, style }: DismissKeyboardViewProps) => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <KeyboardAwareScrollView style={style}>
+    <KeyboardAwareScrollView style={[style, { backgroundColor: 'white' }]}>
       {children}
     </KeyboardAwareScrollView>
   </TouchableWithoutFeedback>
