@@ -1,0 +1,6 @@
+<resources>
+  <string name="app_name">cs-chatbot</string>
+  <string name="kakao_app_key">5ad501b67959ef65cd6112165ee5a756</string>
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+</resources>
