@@ -8,7 +8,6 @@ export default function SelectTopic() {
 
     return (
         <ImageBackground source={BackgroundImage} style={styles.background}> 
-            <GoBackButton/>
             <Text style = {styles.topText}>주제를 선택해주세요.</Text>
             <TopicButtonContainer/>
         </ImageBackground>

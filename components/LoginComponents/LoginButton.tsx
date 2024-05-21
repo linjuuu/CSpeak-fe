@@ -14,7 +14,7 @@ const LoginButton = () => {
     const kakaoLogin = async () => {
         const token = await KakaoLogins.login();
         const idToken = token.idToken;
-        
+    
         try {
             const response = await axios.post(
                 `http://localhost:8080/api/v1/kakao/login?idToken=${encodeURIComponent(idToken)}`, // URL 쿼리 파라미터로 idToken 추가

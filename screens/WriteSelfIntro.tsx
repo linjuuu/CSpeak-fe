@@ -8,7 +8,6 @@ export default function WriteSelfIntro() {
 
     return (
         <ImageBackground source={BackgroundImage} style={styles.background}>
-            <GoBackButton /> 
             <Text style={styles.topText}>자기소개를 작성해주세요.</Text>
             <InputIntroduction />
         </ImageBackground>

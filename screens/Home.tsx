@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     },
 
     character : {
-        marginTop : 10,
-        width : 230,
-        height : 210,
+        marginTop : 60,
+        width : 270,
+        height : 250,
     }
 });
