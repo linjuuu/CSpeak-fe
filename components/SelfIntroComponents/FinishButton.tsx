@@ -20,6 +20,7 @@ interface FinishButtonProps {
     const handlePress = async () => {
 
       try {
+          navigation.replace('SelfInterview');
           const response = await axios.get(`http://localhost:8080/api/v1/member/initial/chat/self_intro?question=${introTitle}&content=${introText}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -29,7 +30,6 @@ interface FinishButtonProps {
           console.log("채팅창 고유 ID : ", response.data.data.chatRoomId);
           dispatch(setSelfID(response.data.data.chatRoomId));
           dispatch(setInitSelf(response.data.data.question));
-          navigation.navigate('SelfInterview');
       } catch (error) {
           console.error('Error while self intro in:', error.response.data);
       }
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 40,
+    
   },
   text: {
     color: '#ffffff',

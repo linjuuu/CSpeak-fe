@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import ChattingInputBar from "./ChattingInputBar";
 import axios from "axios";
@@ -23,9 +24,13 @@ const ChattingBoard: React.FC = () => {
   const initCS = useSelector((state: any) => state.initCS);
 
   const flatListRef = useRef<FlatList<ChatMessage>>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { isUser: false, message: initCS, index: "1" },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  useEffect(() => {
+    if (initCS) {
+      setMessages([{ isUser: false, message: initCS, index: "1" }]);
+    }
+  }, [initCS]);
 
   const sendMessage = async (newMessage: string) => {
     const updatedUserMessages = [
@@ -76,6 +81,16 @@ const ChattingBoard: React.FC = () => {
     }
   };
 
+  if (!initCS) {
+    return (
+      <View style={styles.loadingContainer}>
+        <View style={styles.loadingOverlay} />
+        <ActivityIndicator size="large" color="#ffffff" />
+        <Text style={styles.loadingText}>첫 질문을 준비하는 중 ...</Text>
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -105,8 +120,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.4)",
-    borderTopLeftRadius : 20,
-    borderTopRightRadius : 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     top: 0,
   },
   scrollContent: {
@@ -128,12 +143,26 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   inputBarContainer: {
-    // backgroundColor: "yellow",
     bottom: 0,
     left: 0,
     right: 0,
     height: 0,
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 화면을 어둡게 함
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  },
+  loadingText: {
+    marginTop: 20,
+    color: '#ffffff',
+    fontSize: 16,
   },
 });
 

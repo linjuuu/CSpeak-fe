@@ -1,15 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { setInitSelf, setSelfID } from '../../store/actions';
 
 const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const selfID = useSelector((state: any) => state.selfID);
+  const dispatch = useDispatch();
   const handleFinish = async () => {
-    console.log({selfID} , "의 채팅 종료");
     try {
       const response = await axios.post(`http://localhost:8080/api/v1/member/end/chat/self_intro/${selfID}`, {}, {
         headers: {
@@ -18,6 +19,8 @@ const SelfFinishButton = () => {
       });
 
       console.log('chatting finish :', response.data);
+      dispatch(setSelfID(""));
+      dispatch(setInitSelf(""));
       router.push('/Home');
     } catch (error) {
       // 오류 처리
@@ -35,7 +38,7 @@ const SelfFinishButton = () => {
 const styles = StyleSheet.create({
   buttonLocate: {
     position: 'absolute',
-    top: 20,
+    top: 50,
     right: 20,
     zIndex: 999, // 다른 요소 위로 버튼을 띄우기 위한 zIndex 설정
   },

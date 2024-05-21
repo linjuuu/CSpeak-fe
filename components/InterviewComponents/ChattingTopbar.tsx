@@ -7,7 +7,6 @@ const ChattingTopBar = () => {
 
   return (
     <View style={styles.container}>
-      <CSFinishButton/>
       <Image
         source={require("../../assets/character1.png")} // 이미지 경로 (임시 경로)
         style={styles.profileImage}

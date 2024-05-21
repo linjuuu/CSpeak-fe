@@ -18,6 +18,7 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
   const callAPI = async (topic: string) => {
     
     try {
+        navigation.replace('Interview');
         const response = await axios.get(`http://localhost:8080/api/v1/member/initial/chat/cs/${topic}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -28,7 +29,6 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
         dispatch(setCsID(response.data.data.chatRoomId));
         dispatch(setTopicCS(topic));
         dispatch(setInitCS(response.data.data.question));
-        navigation.navigate('Interview');
     } catch (error) {
         console.error('Error while ChatInitial in:', error.response.data);
     }
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 5,
+    opacity : 0.9
   },
   image: {
     width: '70%',

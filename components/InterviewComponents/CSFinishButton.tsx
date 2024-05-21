@@ -1,15 +1,17 @@
 import React from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { setCsID, setInitCS } from '../../store/actions';
 
 const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const CsID = useSelector((state: any) => state.CsID);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const handleFinish = async () => {
     try {
       const response = await axios.post(`http://localhost:8080/api/v1/member/end/chat/cs/${CsID}`, {}, {
@@ -19,6 +21,8 @@ const SelfFinishButton = () => {
       });
 
       console.log('chatting finish :', response.data);
+      dispatch(setCsID(""));
+      dispatch(setInitCS(""));
       navigation.replace('Home');
     } catch (error) {
       // 오류 처리

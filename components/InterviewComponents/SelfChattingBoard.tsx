@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import ChattingInputBar from "./ChattingInputBar";
 import axios from "axios";
@@ -20,12 +21,16 @@ interface ChatMessage {
 
 const ChattingBoard: React.FC = () => {
   const accessToken = useSelector((state: any) => state.accessToken);
-  const initSelf =  useSelector((state: any) => state.initSelf);
+  const initSelf = useSelector((state: any) => state.initSelf);
   const selfID = useSelector((state: any) => state.selfID);
   const flatListRef = useRef<FlatList<ChatMessage>>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { isUser: false, message: initSelf, index: "1" },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  useEffect(() => {
+    if (initSelf) {
+      setMessages([{ isUser: false, message: initSelf, index: "1" }]);
+    }
+  }, [initSelf]);
 
   const sendMessage = async (newMessage: string) => {
     const updatedUserMessages = [
@@ -35,7 +40,6 @@ const ChattingBoard: React.FC = () => {
     setMessages(updatedUserMessages);
 
     try {
-        //채팅방 고유ID 변수로 설정 필요함
       const response = await axios.get(`http://localhost:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}.`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -76,6 +80,16 @@ const ChattingBoard: React.FC = () => {
       flatListRef.current.scrollToEnd({ animated: true });
     }
   };
+
+  if (!initSelf) {
+    return (
+      <View style={styles.loadingContainer}>
+        <View style={styles.loadingOverlay} />
+        <ActivityIndicator size="large" color="#ffffff" />
+        <Text style={styles.loadingText}>면접 첫 질문을 준비하는 중 ...</Text>
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView
@@ -135,6 +149,21 @@ const styles = StyleSheet.create({
     right: 0,
     height: 0,
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 화면을 어둡게 함
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  loadingText: {
+    marginTop: 20,
+    color: '#ffffff',
+    fontSize: 16,
   },
 });
 
