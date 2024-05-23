@@ -35,8 +35,8 @@ const SelfChattingList = () => {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
-            console.log("자소서 상세 조회 Response:", response.data);
-            setSelectedIntro(response.data);
+            console.log("자소서 상세 조회 Response:", response.data.data);
+            setSelectedIntro(response.data.data.selfIntroChats);
             setModalVisible(true);
         } catch (error) {
             console.error('Error in handlePress:', error);

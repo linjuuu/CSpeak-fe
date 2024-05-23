@@ -20,8 +20,8 @@ const CSChattingList: React.FC = () => {
                     }
                 });
                 console.log("CS 전체 조회 Response:", response.data.data);
-                if (Array.isArray(response.data.data)) {
-                    setCsChats(response.data.data);
+                if (Array.isArray(response.data.data.csChats)) {
+                    setCsChats(response.data.data.csChats);
                 } else {
                     setError("아무 대화가 없습니다");
                 }
@@ -41,7 +41,8 @@ const CSChattingList: React.FC = () => {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
-            setSelectedChat(response.data);
+            console.log(response.data.data.chatEvaluations);
+            setSelectedChat(response.data.data.chatEvaluations);
             setIsModalVisible(true);
         } catch (error) {
             console.error('Error fetching chat details:', error);

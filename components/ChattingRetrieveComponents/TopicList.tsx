@@ -23,8 +23,8 @@ const TopicList: React.FC = () => {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
-            console.log(`$주제 조회 Response:`, response.data);
-            setTopicData(response.data);
+            console.log(`$주제 조회 Response:`, response.data.data.csChats[0].chatHistory);
+            setTopicData(response.data.data.csChats[0].chatHistory);
         } catch (error) {
             console.error(`Error in fetching :`, error);
         }
@@ -37,7 +37,7 @@ const TopicList: React.FC = () => {
                     <View key={topic.id} style={styles.buttonWrapper}>
                         <Button
                             title={topic.name}
-                            onPress={() => handlePress(topics.id)}
+                            onPress={() => handlePress(topic.name)}
                         />
                     </View>
                 ))}
