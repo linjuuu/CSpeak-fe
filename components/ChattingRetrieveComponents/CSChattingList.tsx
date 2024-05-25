@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet, ScrollView, Modal, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import withRedux from "../../store/withRedux";
+import { useNavigation } from "@react-navigation/native";
+import { setCsID, setSelfID } from "../../store/actions";
 
 const CSChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
     const [csChats, setCsChats] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const [selectedChat, setSelectedChat] = useState<any | null>(null);
-    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -34,53 +36,21 @@ const CSChattingList: React.FC = () => {
         fetchChats();
     }, [accessToken]);
 
-    const fetchChatDetails = async (csID: string) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/member/cs/${csID}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            console.log(response.data.data.chatEvaluations);
-            setSelectedChat(response.data.data.chatEvaluations);
-            setIsModalVisible(true);
-        } catch (error) {
-            console.error('Error fetching chat details:', error);
-        }
-    };
-
-    const closeModal = () => {
-        setIsModalVisible(false);
-        setSelectedChat(null);
+    const handleChatPress = (csID: string) => {
+        dispatch(setCsID(csID));
+        dispatch(setSelfID(""));
+        navigation.navigate('CheckRating');
     };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {error && <Text style={styles.errorText}>{error}</Text>}
             {csChats.map((chat, index) => (
-                <TouchableOpacity key={chat.id} style={styles.chatContainer} onPress={() => fetchChatDetails(chat.id)}>
-                    <Text style={styles.chatTitle}>CS Chat {index + 1}</Text>
-                    <Text>CreatedAt: {chat.createdAt}</Text>
-                    <Text>MemberId: {chat.memberId}</Text>
+                <TouchableOpacity key={chat.id} style={styles.chatContainer} onPress={() => handleChatPress(chat.id)}>
+                    <Text style={styles.chatTitle}>CS 면접 {index + 1}</Text>
+                    <Text>면접 날짜: {chat.createdAt}</Text>
                 </TouchableOpacity>
             ))}
-            <Modal visible={isModalVisible} transparent={true} animationType="slide">
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        {selectedChat ? (
-                            <>
-                                <Text style={styles.chatTitle}>Chat Details</Text>
-                                <Text>CreatedAt: {selectedChat.createdAt}</Text>
-                                <Text>MemberId: {selectedChat.memberId}</Text>
-                                <Text>{JSON.stringify(selectedChat, null, 2)}</Text>
-                            </>
-                        ) : (
-                            <Text>Loading...</Text>
-                        )}
-                        <Button title="Close" onPress={closeModal} />
-                    </View>
-                </View>
-            </Modal>
         </ScrollView>
     );
 };
@@ -104,18 +74,6 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         marginBottom: 20,
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        width: '80%',
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
     },
 });
 

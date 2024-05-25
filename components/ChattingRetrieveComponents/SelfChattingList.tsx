@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, StyleSheet, ScrollView, Modal, Text, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import withRedux from "../../store/withRedux";
+import { useNavigation } from "@react-navigation/native";
+import { setCsID, setSelfID } from "../../store/actions";
 
-const SelfChattingList = () => {
+const SelfChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
     const [selfIntros, setSelfIntros] = useState<any[]>([]);
-    const [selectedIntro, setSelectedIntro] = useState<any>(null);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -19,65 +22,35 @@ const SelfChattingList = () => {
                     }
                 });
                 console.log("자소서 전체 조회 Response:", response.data.data);
-                setSelfIntros(response.data.data.selfIntros);
+                if (Array.isArray(response.data.data.selfIntros)) {
+                    setSelfIntros(response.data.data.selfIntros);
+                } else {
+                    setError("아무 자소서가 없습니다");
+                }
             } catch (error) {
                 console.error('Error in SelfChattingList:', error);
+                setError("Failed to fetch self intros");
             }
         };
 
         fetchChats();
     }, [accessToken]);
 
-    const handlePress = async (id: string) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/member/self_intro/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            console.log("자소서 상세 조회 Response:", response.data.data);
-            setSelectedIntro(response.data.data.selfIntroChats);
-            setModalVisible(true);
-        } catch (error) {
-            console.error('Error in handlePress:', error);
-        }
+    const handleIntroPress = (selfID: string) => {
+        dispatch(setSelfID(selfID));
+        dispatch(setCsID(""));
+        navigation.navigate('CheckRating');
     };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
+            {error && <Text style={styles.errorText}>{error}</Text>}
             {selfIntros.map((intro, index) => (
-                <View key={intro.id} style={styles.buttonContainer}>
-                    <Button
-                        title={`자기소개서 ${index + 1}`}
-                        onPress={() => handlePress(intro.id)}
-                    />
-                </View>
+                <TouchableOpacity key={intro.id} style={styles.introContainer} onPress={() => handleIntroPress(intro.id)}>
+                    <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
+                    <Text>작성 날짜: {intro.createdAt}</Text>
+                </TouchableOpacity>
             ))}
-            <Modal
-                visible={modalVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>자소서 상세 내용</Text>
-                        {selectedIntro && (
-                            <>
-                                <Text>제목: {selectedIntro.title}</Text>
-                                <Text>내용: {selectedIntro.content}</Text>
-                                {/* Add more fields as necessary */}
-                            </>
-                        )}
-                        <TouchableOpacity
-                            onPress={() => setModalVisible(false)}
-                            style={styles.closeButton}
-                        >
-                            <Text style={styles.closeButtonText}>닫기</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
         </ScrollView>
     );
 };
@@ -85,41 +58,22 @@ const SelfChattingList = () => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         padding: 20,
     },
-    buttonContainer: {
-        marginVertical: 10,
-        width: '100%',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        width: 300,
-        padding: 20,
-        backgroundColor: 'white',
+    introContainer: {
+        marginBottom: 20,
+        padding: 10,
+        backgroundColor: '#f9f9f9',
         borderRadius: 10,
-        alignItems: 'center',
     },
-    modalTitle: {
+    introTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 5,
     },
-    closeButton: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: 'blue',
-        borderRadius: 5,
-    },
-    closeButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
+    errorText: {
+        color: 'red',
+        marginBottom: 20,
     },
 });
 

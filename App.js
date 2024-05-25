@@ -9,6 +9,7 @@ import ChattingRetrieve from "./screens/ChattingRetrieve";
 import WriteSelfIntro from "./screens/WriteSelfIntro";
 import SelectTopic from "./screens/SelectTopic";
 import SelfInterview from "./screens/SelfInterview";
+import CheckRating from "./screens/CheckRating";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
         <Stack.Screen name="Interview" component={Interview} options={{headerShown: false}}/>
         <Stack.Screen name="ChattingRetrieve" component={ChattingRetrieve} options={{headerShown: false}}/>
+        <Stack.Screen name="CheckRating" component={CheckRating} options={{headerShown: false}}/>
         <Stack.Screen name="WriteSelfIntro" component={WriteSelfIntro} options={{headerShown: false}}/>
         <Stack.Screen name="SelectTopic" component={SelectTopic} options={{headerShown: false}}/>
         <Stack.Screen name="SelfInterview" component={SelfInterview} options={{headerShown: false}}/>

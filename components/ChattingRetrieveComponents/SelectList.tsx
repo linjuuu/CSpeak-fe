@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', // 가운데 정렬
         borderRadius: 10, // 모서리 둥글게
         padding: 10, // 내부 여백
-        marginVertical: 10, // 상하 여백
+        marginTop: 60, // 상하 여백
     },
     selectedButton: {
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
@@ -79,3 +79,8 @@ const styles = StyleSheet.create({
 });
 
 export default SelectList;
+
+
+
+
+
