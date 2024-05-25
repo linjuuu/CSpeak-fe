@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     topText: {
         textAlign: 'center',
         fontWeight: 'bold',
+        fontFamily : 'AppleSDGothicNeoM',
         fontSize: 18,
         color: 'white',  // 텍스트 색상을 흰색으로 설정
-        marginTop: 130,  // 화면 상단부터의 간격을 조정
+        marginTop: 80,  // 화면 상단부터의 간격을 조정
       },
 
   });

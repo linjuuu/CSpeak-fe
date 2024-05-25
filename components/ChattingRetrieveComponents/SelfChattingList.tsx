@@ -48,7 +48,7 @@ const SelfChattingList = () => {
             {selfIntros.map((intro, index) => (
                 <View key={intro.id} style={styles.buttonContainer}>
                     <Button
-                        title={`자소서 ${index + 1}`}
+                        title={`자기소개서 ${index + 1}`}
                         onPress={() => handlePress(intro.id)}
                     />
                 </View>

@@ -6,7 +6,6 @@ import withRedux from '../../store/withRedux';
 
 const TopicList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
-    const CsID = useSelector((state: any) => state.CsID);
     const [topicData, setTopicData] = useState<any>(null);
 
     const topics = [
