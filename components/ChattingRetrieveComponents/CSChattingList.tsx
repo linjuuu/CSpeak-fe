@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import withRedux from "../../store/withRedux";
 import { useNavigation } from "@react-navigation/native";
-import { setCsID, setSelfID } from "../../store/actions";
+import { setCsID, setSelfID, setTopicCS } from "../../store/actions";
 
 const CSChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
@@ -39,6 +39,7 @@ const CSChattingList: React.FC = () => {
     const handleChatPress = (csID: string) => {
         dispatch(setCsID(csID));
         dispatch(setSelfID(""));
+        dispatch(setTopicCS(""));
         navigation.navigate('CheckRating');
     };
 

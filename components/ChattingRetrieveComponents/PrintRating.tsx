@@ -1,31 +1,135 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import withRedux from '../../store/withRedux';
+import axios from 'axios';
+
 
 const PrintRating: React.FC = () => {
-    const CsID = useSelector((state: any) => state.CsID);
-    const SelfID = useSelector((state: any) => state.selfID);
+  const [data, setData] = useState<any[]>([]);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const accessToken = useSelector((state: any) => state.accessToken);
+  const CsID = useSelector((state: any) => state.CsID);
+  const selfID = useSelector((state: any) => state.selfID);
+  const topicCS = useSelector((state: any) => state.topicCS);
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response;
         if (CsID) {
-            console.log('CsID 있음:', CsID);
-        } else if (SelfID) {
-            console.log('SelfID 있음:', SelfID);
+          response = await axios.get(`http://localhost:8080/api/v1/member/cs/${CsID}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          setData(response.data.data.chatEvaluations || []);
+        } else if (selfID) {
+          response = await axios.get(`http://localhost:8080/api/v1/member/self_intro/${selfID}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          setData(response.data.data.selfIntroChats || []);
         } else {
-            console.log('CsID와 SelfID가 모두 없습니다');
+          response = await axios.get(`http://localhost:8080/api/v1/member/chats/cs/${topicCS}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          setData(response.data.data.csChats[0].chatHistory || []);
+          return;
         }
-    }, [CsID, SelfID]);
+      } catch (error) {
+        
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [CsID, selfID]);
 
-    return (
-        <>
-            <Text>{CsID || SelfID ? `ID: ${CsID || SelfID}` : 'ID 없음'}</Text>
-        </>
-    );
+
+  const handlePress = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+        {data.length === 0 ? (
+            <Text style={styles.noDataText}>No data available</Text>
+        ) : (
+            data.map((item, index) => (
+            <View key={index}>
+                <View style={styles.card}>
+                <TouchableOpacity onPress={() => handlePress(index)}>
+                    <Text style={styles.questionText}>Q: {item.question}</Text>
+                </TouchableOpacity>
+                {expandedIndex === index && (
+                    <View style={styles.expandedSection}>
+                    <Text style={styles.answerText}>A: {item.answer}</Text>
+                    <Text style={styles.evaluationText}>F: {item.evaluation}</Text>
+                    </View>
+                )}
+                </View>
+                {index < data.length - 1 && <View style={styles.separator} />}
+            </View>
+            ))
+        )}
+    </ScrollView>
+  );
 };
 
+
+
 const styles = StyleSheet.create({
-    // 스타일 정의가 필요 없으면 비워두세요
+  container: {
+    flex: 1,
+    padding: 16,
+    marginTop: 20,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: 'rgba(255,255,255,0.6)',
+  },
+
+  noDataText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+
+  card: {
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+
+  questionText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+
+  expandedSection: {
+    marginTop: 8,
+    backgroundColor: '#f0f0f0',
+    padding: 12,
+    borderRadius: 8,
+  },
+
+  separator: {
+    height: 1,
+    backgroundColor: '#cccccc',
+    marginVertical: 10,
+  },
+
+  answerText: {
+    fontSize: 14,
+    color: '#007bff',
+    marginBottom: 8,
+  },
+
+  evaluationText: {
+    fontSize: 14,
+    color: '#28a745',
+  },
 });
 
 export default withRedux(PrintRating);

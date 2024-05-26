@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, ScrollView, Text } from 'react-native';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
+import { setCsID, setSelfID, setTopicCS } from '../../store/actions';
+import { useNavigation } from '@react-navigation/native';
 
 const TopicList: React.FC = () => {
-    const accessToken = useSelector((state: any) => state.accessToken);
-    const [topicData, setTopicData] = useState<any>(null);
-
     const topics = [
         { id: 'computer_network', name: '컴퓨터네트워크' },
         { id: 'operating_system', name: '운영체제' },
@@ -15,40 +13,34 @@ const TopicList: React.FC = () => {
         { id: 'database', name: '데이터베이스' },
     ];
 
-    const handlePress = async (topic : string) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/member/chats/cs/${topic}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            console.log(`$주제 조회 Response:`, response.data.data.csChats[0].chatHistory);
-            setTopicData(response.data.data.csChats[0].chatHistory);
-        } catch (error) {
-            console.error(`Error in fetching :`, error);
-        }
+    const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+
+    const handleTopicPress = (name: string) => {
+        dispatch(setTopicCS(name));
+        dispatch(setCsID(""));
+        dispatch(setSelfID(""));
+        setSelectedTopic(name); // 선택된 토픽 업데이트
+        navigation.navigate('CheckRating');
     };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.buttonContainer}>
+            <ScrollView horizontal contentContainerStyle={styles.buttonContainer} showsHorizontalScrollIndicator={false}>
                 {topics.map(topic => (
                     <View key={topic.id} style={styles.buttonWrapper}>
-                        <Button
-                            title={topic.name}
-                            onPress={() => handlePress(topic.name)}
-                        />
+                        <TouchableOpacity
+                            onPress={() => handleTopicPress(topic.name)}
+                            style={[styles.button, selectedTopic === topic.name && styles.selectedButton]}
+                        >
+                            <Text style={[styles.buttonText, selectedTopic === topic.name && styles.selectedText]}>
+                                {topic.name}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 ))}
-            </View>
-            <View style={styles.resultContainer}>
-                {topicData && (
-                    <>
-                        <Text style={styles.resultTitle}>조회 결과:</Text>
-                        <Text>{JSON.stringify(topicData, null, 2)}</Text>
-                    </>
-                )}
-            </View>
+            </ScrollView>
         </ScrollView>
     );
 };
@@ -56,31 +48,33 @@ const TopicList: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         padding: 20,
     },
     buttonContainer: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        width: '100%',
+        flexWrap: 'nowrap',
     },
     buttonWrapper: {
-        margin: 10,
-        width: '45%',
-    },
-    resultContainer: {
-        marginTop: 20,
-        width: '100%',
         padding: 10,
-        backgroundColor: '#f9f9f9',
-        borderRadius: 10,
     },
-    resultTitle: {
-        fontSize: 18,
+    button: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginHorizontal: 3,
+        backgroundColor: '#fff',
+        borderRadius: 15,
+    },
+    buttonText: {
+        fontSize: 16,
+        color: '#999',
+    },
+    selectedButton: {
+        backgroundColor: '#f9f9f9',
+    },
+    selectedText: {
+        color: '#000',
         fontWeight: 'bold',
-        marginBottom: 10,
     },
 });
 
