@@ -1,21 +1,20 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
-
-//앱 로고 설정 필요한 상태.
 export default function AppLogo() {
     return(
         <>
-            <Text style = {styles.logo}>CSpeak</Text>
+            <Image style={styles.logo} source={require('../../assets/applogo.png')}/>
         </>
     )
 }
 
 const styles = StyleSheet.create({
+
     logo: {
-        fontSize: 30,
-        color: "#5871F3", // 하늘색
-        fontWeight: "bold", // 굵게
-        textAlign: "center", // 가운데 정렬
-        fontFamily : 'Cafe24Ssurround'
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+        alignSelf: 'center',
     },
+
 });

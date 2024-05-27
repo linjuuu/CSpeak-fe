@@ -6,41 +6,69 @@
 
 <dict>
 
+    <key>NSMicrophoneUsageDescription</key>
+
+    <string>앱에서 음성을 녹음하고 처리하기 위해 마이크에 접근해야 합니다.</string>
+
+    <key>NSSpeechRecognitionUsageDescription</key>
+
+    <string>앱이 음성을 텍스트로 변환하기 위해 음성 인식 기능을 사용합니다.</string>
+
+
+
     <key>CADisableMinimumFrameDurationOnPhone</key>
 
     <true/>
+
+
 
     <key>CFBundleDevelopmentRegion</key>
 
     <string>$(DEVELOPMENT_LANGUAGE)</string>
 
+
+
     <key>CFBundleDisplayName</key>
 
     <string>cs-chatbot</string>
+
+
 
     <key>CFBundleExecutable</key>
 
     <string>$(EXECUTABLE_NAME)</string>
 
+
+
     <key>CFBundleIdentifier</key>
 
     <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+
 
     <key>CFBundleInfoDictionaryVersion</key>
 
     <string>6.0</string>
 
+
+
     <key>CFBundleName</key>
 
     <string>$(PRODUCT_NAME)</string>
+
+
 
     <key>CFBundlePackageType</key>
 
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 
+
+
     <key>CFBundleShortVersionString</key>
 
     <string>1.0.0</string>
+
+
 
     <key>CFBundleSignature</key>
 
@@ -88,7 +116,7 @@
 
     </dict>
 
-    
+
 
     <key>CFBundleURLTypes</key>
 
@@ -148,13 +176,19 @@
 
     </array>
 
+
+
     <key>CFBundleVersion</key>
 
     <string>1</string>
 
+
+
     <key>KAKAO_APP_KEY</key>
 
     <string>5ad501b67959ef65cd6112165ee5a756</string>
+
+
 
     <key>LSApplicationQueriesSchemes</key>
 
@@ -168,13 +202,19 @@
 
     </array>
 
+
+
     <key>LSRequiresIPhoneOS</key>
 
     <true/>
 
+
+
     <key>UILaunchStoryboardName</key>
 
     <string>SplashScreen</string>
+
+
 
     <key>UIRequiredDeviceCapabilities</key>
 
@@ -184,13 +224,19 @@
 
     </array>
 
+
+
     <key>UIRequiresFullScreen</key>
 
     <false/>
 
+
+
     <key>UIStatusBarStyle</key>
 
     <string>UIStatusBarStyleDefault</string>
+
+
 
     <key>UISupportedInterfaceOrientations</key>
 
@@ -201,6 +247,8 @@
         <string>UIInterfaceOrientationPortraitUpsideDown</string>
 
     </array>
+
+
 
     <key>UISupportedInterfaceOrientations~ipad</key>
 
@@ -216,9 +264,13 @@
 
     </array>
 
+
+
     <key>UIUserInterfaceStyle</key>
 
     <string>Light</string>
+
+
 
     <key>UIViewControllerBasedStatusBarAppearance</key>
 

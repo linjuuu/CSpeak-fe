@@ -44,14 +44,14 @@ const LoginButton = () => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: 250,
+        marginTop: 100,
     },
     buttonContainer: {
         elevation: 5, // 그림자의 깊이를 조절합니다.
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 10,
         },
         shadowOpacity: 0.15,
         shadowRadius: 3.84,
