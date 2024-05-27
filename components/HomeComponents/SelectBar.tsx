@@ -64,7 +64,7 @@ const SelectBar: React.FC = () => {
 const styles = StyleSheet.create({
   backgroundContainer: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   foregroundContainer: {
     flex: 1,
@@ -73,31 +73,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    borderRadius: 50,
-    margin: 10,
+    borderRadius: 100,
+    margin: 20,
+    marginTop : -40,
     padding: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5, // For Android shadow
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
   },
   selectedButton: {
     backgroundColor: 'rgba(255, 255, 255, 1)',
   },
   unselectedButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: 'rgba(230, 230, 230, 0.5)',
   },
   image: {
     width: 150,
-    height: 150,
+    height: 200,
+    overflow: 'visible'
   },
   selectText: {
     textAlign: 'center',
-    fontWeight: 'bold',
     flexWrap: 'wrap',
     maxWidth: 200,
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'AppleSDGothicNeoM',
   },
 });

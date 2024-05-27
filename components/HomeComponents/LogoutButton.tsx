@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   logout_button: {
     width: 30,
     height: 30,
+    opacity : 0.5,
   },
 });
 

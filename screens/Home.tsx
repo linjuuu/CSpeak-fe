@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
 
     character : {
         marginTop : '20%',
-        width : 270,
-        height : 250,
+        width : '80%',
+        height : '30%',
+        resizeMode: 'contain'
     }
 });
