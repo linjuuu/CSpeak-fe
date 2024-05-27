@@ -24,8 +24,6 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log("Initial Chat Response:", response.data);
-        console.log('질문 : ' , response.data.data.question);
         dispatch(setCsID(response.data.data.chatRoomId));
         dispatch(setTopicCS(topic));
         dispatch(setInitCS(response.data.data.question));
