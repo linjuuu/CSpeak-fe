@@ -18,17 +18,17 @@ const PrintRating: React.FC = () => {
       try {
         let response;
         if (CsID) {
-          response = await axios.get(`http://localhost:8080/api/v1/member/cs/${CsID}`, {
+          response = await axios.get(`http://43.201.164.254:8080/api/v1/member/cs/${CsID}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
           setData(response.data.data.chatEvaluations || []);
         } else if (selfID) {
-          response = await axios.get(`http://localhost:8080/api/v1/member/self_intro/${selfID}`, {
+          response = await axios.get(`http://43.201.164.254:8080/api/v1/member/self_intro/${selfID}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
           setData(response.data.data.selfIntroChats || []);
         } else {
-          response = await axios.get(`http://localhost:8080/api/v1/member/chats/cs/${topicCS}`, {
+          response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${topicCS}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
           setData(response.data.data.csChats[0].chatHistory || []);

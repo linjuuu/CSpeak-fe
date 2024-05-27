@@ -17,8 +17,8 @@ const LoginButton = () => {
     
         try {
             const response = await axios.post(
-                `http://localhost:8080/api/v1/kakao/login?idToken=${encodeURIComponent(idToken)}`, // URL 쿼리 파라미터로 idToken 추가
-                null, // 본문은 null로 설정
+                `http://43.201.164.254:8080/api/v1/kakao/login?idToken=${encodeURIComponent(idToken)}`,
+                {}
             );
             const accessToken = response.data.data.authTokens.accessToken;
             const refreshToken = response.data.data.authTokens.refreshToken;
@@ -27,9 +27,9 @@ const LoginButton = () => {
             dispatch(setRefreshToken(refreshToken));
             dispatch(setUsername(username));
             console.log(username, "로그인 성공");
-            navigation.replace("Home");
+            navigation.replace("Home"); 
         } catch (error) {
-            console.error('Error while logging in:', error.response.data);
+            console.error('Error while logging in:', error);
         }
     };
 

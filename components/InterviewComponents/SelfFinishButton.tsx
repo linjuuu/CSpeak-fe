@@ -15,7 +15,7 @@ const SelfFinishButton = () => {
   
   const handleFinish = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/v1/member/end/chat/self_intro/${selfID}`, {}, {
+      const response = await axios.post(`http://43.201.164.254:8080/api/v1/member/end/chat/self_intro/${selfID}`, {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -24,7 +24,7 @@ const SelfFinishButton = () => {
       console.log('chatting finish :', response.data);
       dispatch(setSelfID(""));
       dispatch(setInitSelf(""));
-      navigation.replace('/Home');
+      navigation.replace('Home');
     } catch (error) {
       // 오류 처리
       console.error('Error chatting finish :', error);

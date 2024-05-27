@@ -19,7 +19,7 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
     
     try {
         navigation.replace('Interview');
-        const response = await axios.get(`http://localhost:8080/api/v1/member/initial/chat/cs/${topic}`, {
+        const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/initial/chat/cs/${topic}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

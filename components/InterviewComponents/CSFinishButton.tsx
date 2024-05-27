@@ -14,7 +14,7 @@ const SelfFinishButton = () => {
   const dispatch = useDispatch();
   const handleFinish = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/v1/member/end/chat/cs/${CsID}`, {}, {
+      const response = await axios.post(`http://43.201.164.254:8080/api/v1/member/end/chat/cs/${CsID}`, {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

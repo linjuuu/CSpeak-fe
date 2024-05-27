@@ -40,7 +40,7 @@ const ChattingBoard: React.FC = () => {
     setMessages(updatedUserMessages);
 
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}.`, {
+      const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}.`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

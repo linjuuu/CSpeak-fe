@@ -13,7 +13,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/member/logout', {}, {
+      const response = await axios.post('http://43.201.164.254:8080/api/v1/member/logout', {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

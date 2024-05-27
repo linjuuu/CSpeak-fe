@@ -21,7 +21,7 @@ const Login = () => {
               console.log("리프레시 토큰 : ", refreshToken);
               try {
                   const response = await axios.post(
-                      'http://localhost:8080/api/v1/reissue', 
+                      'http://43.201.164.254:8080/api/v1/reissue', 
                       {}, 
                       {
                           headers: {

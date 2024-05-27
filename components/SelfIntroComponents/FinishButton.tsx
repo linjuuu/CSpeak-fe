@@ -21,7 +21,7 @@ interface FinishButtonProps {
 
       try {
           navigation.replace('SelfInterview');
-          const response = await axios.get(`http://localhost:8080/api/v1/member/initial/chat/self_intro?question=${introTitle}&content=${introText}`, {
+          const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/initial/chat/self_intro?question=${introTitle}&content=${introText}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },

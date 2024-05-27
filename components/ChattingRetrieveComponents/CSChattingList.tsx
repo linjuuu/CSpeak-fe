@@ -16,7 +16,7 @@ const CSChattingList: React.FC = () => {
     useEffect(() => {
         const fetchChats = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/member/chats/cs', {
+                const response = await axios.get('http://43.201.164.254:8080/api/v1/member/chats/cs', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
