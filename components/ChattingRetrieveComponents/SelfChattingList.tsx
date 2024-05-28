@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Image, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import withRedux from "../../store/withRedux";
 import { useNavigation } from "@react-navigation/native";
 import { setCsID, setSelfID, setTopicCS } from "../../store/actions";
+
+// 미리 모든 이미지를 import 합니다.
+import character1 from '../../assets/character1.png';
+import character2 from '../../assets/character2.png';
+import character3 from '../../assets/character3.png';
+import character4 from '../../assets/character4.png';
+import character5 from '../../assets/character5.png';
 
 const SelfChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
@@ -45,15 +52,24 @@ const SelfChattingList: React.FC = () => {
         navigation.navigate('CheckRating');
     };
 
+    // 미리 import한 이미지 배열을 생성합니다.
+    const images = [character1, character2, character3, character4, character5];
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {error && <Text style={styles.errorText}>{error}</Text>}
-            {selfIntros.map((intro, index) => (
-                <TouchableOpacity key={intro.id} style={styles.introContainer} onPress={() => handleIntroPress(intro.id)}>
-                    <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
-                    <Text>작성 날짜: {intro.createdAt}</Text>
-                </TouchableOpacity>
-            ))}
+            {selfIntros.map((intro, index) => {
+                const randomImageIndex = Math.floor(Math.random() * 5); // 0부터 4까지의 랜덤 숫자 생성
+                return (
+                    <TouchableOpacity key={intro.id} style={styles.introContainer} onPress={() => handleIntroPress(intro.id)}>
+                        <Image source={images[randomImageIndex]} style={styles.image} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
+                            <Text>작성 날짜: {intro.createdAt}</Text>
+                        </View>
+                    </TouchableOpacity>
+                );
+            })}
         </ScrollView>
     );
 };
@@ -63,11 +79,22 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         padding: 20,
     },
+    image: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        marginRight: 10,
+    },
     introContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: 20,
         padding: 10,
         backgroundColor: '#f9f9f9',
         borderRadius: 10,
+    },
+    textContainer: {
+        flex: 1,
     },
     introTitle: {
         fontSize: 18,

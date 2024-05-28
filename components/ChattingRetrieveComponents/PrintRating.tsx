@@ -56,12 +56,12 @@ const PrintRating: React.FC = () => {
             <View key={index}>
                 <View style={styles.card}>
                 <TouchableOpacity onPress={() => handlePress(index)}>
-                    <Text style={styles.questionText}>Q: {item.question}</Text>
+                    <Text style={styles.questionText}>{"Q.\n"} {item.question}</Text>
                 </TouchableOpacity>
                 {expandedIndex === index && (
                     <View style={styles.expandedSection}>
-                    <Text style={styles.answerText}>A: {item.answer}</Text>
-                    <Text style={styles.evaluationText}>F: {item.evaluation}</Text>
+                    <Text style={styles.answerText}>답변: {item.answer}</Text>
+                    <Text style={styles.evaluationText}>평가: {item.evaluation}</Text>
                     </View>
                 )}
                 </View>

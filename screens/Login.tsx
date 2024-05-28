@@ -7,7 +7,6 @@ import { setAccessToken } from "../store/actions";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import withRedux from "../store/withRedux";
-import 
 
 const Login = () => {
   const BackgroundImage = require('../assets/background1.png');

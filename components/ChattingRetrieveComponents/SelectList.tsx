@@ -14,73 +14,74 @@ const SelectList: React.FC = () => {
                 style={[styles.button, selectedList === 'self' && styles.selectedButton]}
                 onPress={() => setSelectedList('self')}
             >
-                <Text style={styles.buttonText}>자기소개서</Text>
+                <Text style={[styles.buttonText, selectedList === 'self' && styles.selectedButtonText]}>자기소개서</Text>
+                {selectedList === 'self' && <View style={styles.underline} />}
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.button, selectedList === 'cs주제별 보기' && styles.selectedButton]}
                 onPress={() => setSelectedList('cs주제별 보기')}
             >
-                <Text style={styles.buttonText}>{"CS 주제별"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, selectedList === 'cs전체보기' && styles.selectedButton]}
-                onPress={() => setSelectedList('cs전체보기')}
-            >
-                <Text style={styles.buttonText}>CS 전체</Text>
+                <Text style={[styles.buttonText, selectedList === 'cs주제별 보기' && styles.selectedButtonText]}>{"CS 주제별"}</Text>
+                {selectedList === 'cs주제별 보기' && <View style={styles.underline} />}
             </TouchableOpacity>
         </View>
 
-            <View style={styles.container}>
-                <View style={styles.listContainer}>
-                    {selectedList === 'self' && <SelfChattingList />}
-                    {selectedList === 'cs주제별 보기' && <TopicList />}
-                    {selectedList === 'cs전체보기' && <CSChattingList />}
-                </View>
+        <View style={styles.container}>
+            <View style={styles.listContainer}>
+                {selectedList === 'self' && <SelfChattingList />}
+                {selectedList === 'cs주제별 보기' && <TopicList />}
+                {selectedList === 'cs전체보기' && <CSChattingList />}
             </View>
+        </View>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    selectButtonContainer : {
+    selectButtonContainer: {
         flexDirection: 'row',
-        justifyContent: 'center', // 가운데 정렬
-        borderRadius: 10, // 모서리 둥글게
-        padding: 10, // 내부 여백
-        marginTop: 60, // 상하 여백
+        justifyContent: 'center',
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 60,
+    },
+    button: {
+        flex: 1, // 화면을 반반씩 나누기
+        alignItems: 'center',
+        paddingVertical: 15,
+        borderRadius: 10,
     },
     selectedButton: {
-        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        position: 'relative',
     },
-
+    underline: {
+        position: 'absolute',
+        bottom: 0,
+        height: 4,
+        width: '100%',
+        backgroundColor: 'rgba(100, 100, 200, 1)', // 연한 보라색
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+    },
     container: {
         flex: 1,
-        marginTop: '10%',
+        marginTop: '-2%',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         borderTopLeftRadius: 20,
-        borderTopRightRadius: 20, 
+        borderTopRightRadius: 20,
     },
     listContainer: {
         flex: 1,
     },
-    button: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginHorizontal: 5, // 버튼 간격
-    },
-    
     buttonText: {
-        color: 'rgb(0, 0, 0)',
+        color: 'rgba(255, 255, 255, 0.6)',
         fontWeight: 'bold',
-        fontFamily : "AppleSDGothicNeoM",
+        fontFamily: "AppleSDGothicNeoM",
         fontSize: 16,
+    },
+    selectedButtonText: {
+        color: 'black', // 선택된 버튼의 텍스트 색상
     },
 });
 
 export default SelectList;
-
-
-
-
-

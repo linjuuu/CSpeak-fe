@@ -7,10 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 
 const TopicList: React.FC = () => {
     const topics = [
+        { id: 'total', name: '전체' }, 
         { id: 'computer_network', name: '컴퓨터네트워크' },
         { id: 'operating_system', name: '운영체제' },
         { id: 'data_structure', name: '자료구조' },
-        { id: 'database', name: '데이터베이스' },
+        { id: 'database', name: '데이터베이스' }, 
     ];
 
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -61,9 +62,16 @@ const styles = StyleSheet.create({
     button: {
         paddingHorizontal: 15,
         paddingVertical: 10,
-        marginHorizontal: 3,
+        marginHorizontal: -5,
         backgroundColor: '#fff',
         borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 3.84,
     },
     buttonText: {
         fontSize: 16,

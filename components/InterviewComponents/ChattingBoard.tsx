@@ -164,11 +164,11 @@ const styles = StyleSheet.create({
     elevation: 5, // 안드로이드에서의 그림자 효과를 위해 추가
   },
   userMessage: {
-    backgroundColor: "#ffffff", // 유저 메시지를 흰색으로 변경
+    backgroundColor: "#F6F3FF", // 유저 메시지를 흰색으로 변경
     alignSelf: "flex-end",
   },
   computerMessage: {
-    backgroundColor: "#d3d3d3", // 컴퓨터 메시지를 회색으로 변경
+    backgroundColor: "#BBBFFF", // 컴퓨터 메시지를 회색으로 변경
     alignSelf: "flex-start",
   },
   messageText: {

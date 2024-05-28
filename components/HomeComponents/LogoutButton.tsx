@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
-import { TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, Alert,Text } from 'react-native';
 import { setAccessToken, setRefreshToken } from '../../store/actions';
 import { useNavigation } from '@react-navigation/native';
 
@@ -39,7 +39,7 @@ const LogoutButton = () => {
         },
         {
           text: "확인",
-          onPress: handleLogout
+          onPress: handleLogout,
         }
       ],
       { cancelable: false }
@@ -48,7 +48,8 @@ const LogoutButton = () => {
 
   return (
     <TouchableOpacity style={styles.buttonLocate} onPress={confirmLogout}>
-      <Image source={require("../../assets/logout_button.png")} style={styles.logout_button} />
+      <Text style = {styles.logout_button}>로그아웃</Text>
+      {/* <Image source={require("../../assets/logout_button.png")} style={styles.logout_button} /> */}
     </TouchableOpacity>
   );
 };
@@ -57,12 +58,10 @@ const styles = StyleSheet.create({
   buttonLocate: {
     position: 'absolute',
     top: '7%',
-    left: 20,
+    right: 20,
     zIndex: 999,
   },
   logout_button: {
-    width: 30,
-    height: 30,
     opacity : 0.5,
   },
 });

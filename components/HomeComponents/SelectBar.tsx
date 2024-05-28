@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const SelectBar: React.FC = () => {
   const navigation = useNavigation();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const buttons = [
     {
@@ -24,6 +24,14 @@ const SelectBar: React.FC = () => {
       onPress: () => navigation.navigate('ChattingRetrieve'),
     },
   ];
+
+  const handlePress = (index: number, onPress: () => void) => {
+    setSelectedIndex(index);
+    onPress();
+    setTimeout(() => {
+      setSelectedIndex(null);
+    }, 1000); 
+  };
 
   return (
     <>
@@ -44,10 +52,7 @@ const SelectBar: React.FC = () => {
                 ]}
               >
                 <TouchableOpacity
-                  onPress={() => {
-                    setSelectedIndex(index);
-                    button.onPress();
-                  }}
+                  onPress={() => handlePress(index, button.onPress)}
                 >
                   <Image style={styles.image} source={button.image} />
                   <Text style={styles.selectText}>{button.text}</Text>
@@ -75,12 +80,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 100,
     margin: 20,
-    marginTop : -40,
+    marginTop: -40,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
+    borderWidth: 2, // 테두리 두께
+    borderColor: '#ccc', // 테두리 색상
   },
   selectedButton: {
     backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 200,
-    overflow: 'visible'
+    overflow: 'visible',
   },
   selectText: {
     textAlign: 'center',
