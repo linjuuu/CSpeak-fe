@@ -23,14 +23,31 @@ const ChattingBoard: React.FC = () => {
   const accessToken = useSelector((state: any) => state.accessToken);
   const initSelf = useSelector((state: any) => state.initSelf);
   const selfID = useSelector((state: any) => state.selfID);
+  
   const flatListRef = useRef<FlatList<ChatMessage>>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [typingIndicator, setTypingIndicator] = useState<string>("");
 
   useEffect(() => {
     if (initSelf) {
       setMessages([{ isUser: false, message: initSelf, index: "1" }]);
     }
   }, [initSelf]);
+
+  useEffect(() => {
+    let typingTimeout: NodeJS.Timeout;
+    const typingText = [".", "..", "..."];
+    let typingIndex = 0;
+
+    if (typingIndicator) {
+      typingTimeout = setInterval(() => {
+        typingIndex = (typingIndex + 1) % typingText.length;
+        setTypingIndicator(typingText[typingIndex]);
+      }, 500);
+    }
+
+    return () => clearInterval(typingTimeout);
+  }, [typingIndicator]);
 
   const sendMessage = async (newMessage: string) => {
     const updatedUserMessages = [
@@ -39,19 +56,26 @@ const ChattingBoard: React.FC = () => {
     ];
     setMessages(updatedUserMessages);
 
+    setTypingIndicator(".");
+
     try {
-      const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}.`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("Chat Response:", response.data);
-      setMessages(prevMessages => [
+      const response = await axios.get(
+        `http://43.201.164.254:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setTypingIndicator("");
+      console.log("Chat Response:", response.data.data.question);
+      setMessages((prevMessages) => [
         ...prevMessages,
         { isUser: false, message: response.data.data.question, index: String(prevMessages.length + 1) },
       ]);
     } catch (error) {
-      console.error('Error while Chat in:', error);
+      console.error("Error while Chatting:", error);
+      setTypingIndicator("");
     }
   };
 
@@ -64,7 +88,7 @@ const ChattingBoard: React.FC = () => {
           item.isUser ? styles.userMessage : styles.computerMessage,
         ]}
       >
-        <Text>{item.message}</Text>
+        <Text style={styles.messageText}>{item.message}</Text>
       </View>
     );
   };
@@ -100,7 +124,7 @@ const ChattingBoard: React.FC = () => {
         <View style={{ flex: 8 }}>
           <FlatList
             ref={flatListRef}
-            data={messages}
+            data={typingIndicator ? [...messages, { isUser: false, message: `${typingIndicator}`, index: String(messages.length + 1) }] : messages}
             keyExtractor={(item) => item.index}
             renderItem={renderMessage}
             onLayout={handleFlatListLayout}
@@ -119,9 +143,9 @@ const ChattingBoard: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
-    borderTopLeftRadius : 20,
-    borderTopRightRadius : 20,
+    backgroundColor: "rgba(255, 255, 255, 0.35)",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     top: 0,
   },
   scrollContent: {
@@ -130,20 +154,28 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     padding: 10,
-    marginVertical: 5,
-    borderRadius: 10,
+    marginVertical: 15,
+    borderRadius: 20,
     margin: 10,
+    maxWidth: '75%', // 말풍선의 최대 너비를 화면의 2/3로 제한
+    shadowColor: "#000", // 그림자 효과 추가
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5, // 안드로이드에서의 그림자 효과를 위해 추가
   },
   userMessage: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ffffff", // 유저 메시지를 흰색으로 변경
     alignSelf: "flex-end",
   },
   computerMessage: {
-    backgroundColor: "#c9e6e3",
+    backgroundColor: "#d3d3d3", // 컴퓨터 메시지를 회색으로 변경
     alignSelf: "flex-start",
   },
+  messageText: {
+    flexWrap: 'wrap',
+  },
   inputBarContainer: {
-    // backgroundColor: "yellow",
     bottom: 0,
     left: 0,
     right: 0,
@@ -158,7 +190,7 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   loadingText: {
     marginTop: 20,

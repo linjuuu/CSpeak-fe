@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import withRedux from '../../store/withRedux';
-import { setInitSelf, setSelfID } from '../../store/actions';
+import { setInitSelf, setSelfID, setTopicCS } from '../../store/actions';
 import { useNavigation } from '@react-navigation/native';
 
 interface FinishButtonProps {
@@ -30,6 +30,7 @@ interface FinishButtonProps {
           console.log("채팅창 고유 ID : ", response.data.data.chatRoomId);
           dispatch(setSelfID(response.data.data.chatRoomId));
           dispatch(setInitSelf(response.data.data.question));
+          dispatch(setTopicCS("자기소개서"));
       } catch (error) {
           console.error('Error while self intro in:', error.response.data);
       }

@@ -4,10 +4,10 @@ import { useSelector,useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { setCsID, setInitCS } from '../../store/actions';
+import { setCsID, setInitCS, setTopicCS } from '../../store/actions';
 import { AntDesign } from '@expo/vector-icons';
 
-const SelfFinishButton = () => {
+const CSFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const CsID = useSelector((state: any) => state.CsID);
@@ -23,6 +23,8 @@ const SelfFinishButton = () => {
 
       console.log('chatting finish :', response.data);
       dispatch(setCsID(""));
+      dispatch(setInitCS(""));
+      dispatch(setTopicCS(""));
       dispatch(setInitCS(""));
       navigation.replace('Home');
     } catch (error) {
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withRedux(SelfFinishButton);
+export default withRedux(CSFinishButton);
