@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
 
 interface Props {
@@ -21,16 +22,25 @@ const ChattingInputBar: React.FC<Props> = ({ onSendMessage }) => {
     }
   };
 
+  const sendMessageByVoice = () => {
+    console.log("음성 전송");
+  }
+
   return (
     <View style={styles.inputContainer}>
+      <TouchableOpacity style={styles.micButton} onPress={sendMessageByVoice}>
+        <Image source={require("../../assets/microphone.png")} style = {styles.sendImage}/>
+      </TouchableOpacity>
+      
       <TextInput
         style={styles.input}
         placeholder="메시지를 입력하세요"
         value={message}
         onChangeText={setMessage}
       />
+
       <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-        <Text style={styles.sendText}>전송</Text>
+        <Image source={require("../../assets/send.png")} style = {styles.sendImage}/>
       </TouchableOpacity>
     </View>
   );
@@ -43,13 +53,13 @@ const styles = StyleSheet.create({
     marginHorizontal : 15,
     marginBottom: 20,
     backgroundColor: "#fff",
-    borderRadius: 30, // 둥글게 만들기 위해 수정
-    shadowColor: "#000", // 그림자 효과 추가
+    borderRadius: 30, 
+    shadowColor: "#000", 
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    elevation: 5, // 안드로이드에서의 그림자 효과를 위해 추가
   },
+  
   input: {
     flex: 1,
     height: 40, // 입력 폼을 위로 더 길게 수정
@@ -58,18 +68,32 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
   },
-  sendButton: {
-    backgroundColor: "#ffcccb", // 연한 핑크색으로 변경
+  micButton: {
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 15,
-    marginLeft: 10,
+  },
+
+  sendButton: {
+    backgroundColor: "#ffcccb", // 연한 핑크색으로 변경
+    opacity : 0.7,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    marginRight: 10, // 오른쪽 여백을 추가하여 마이크와 전송 버튼 사이의 간격을 조절
   },
   sendText: {
     color: "#fff",
     fontWeight: "bold",
   },
+
+  sendImage : {
+    width : 20,
+    height : 20,
+    opacity : 1,
+  }
 });
 
 export default ChattingInputBar;

@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(230, 230, 230, 0.5)',
   },
   image: {
-    width: 150,
-    height: 200,
+    width: 130,
+    height: 180,
     overflow: 'visible',
   },
   selectText: {
