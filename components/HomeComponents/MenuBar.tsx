@@ -71,7 +71,7 @@ const MenuBar: React.FC<{ setResetMenuBar: (resetFn: () => void) => void }> = ({
     setIsMenuOpen(false);
     Animated.timing(slideAnim, {
       toValue: windowWidth,
-      duration: 800,
+      duration: 300,
       useNativeDriver: false,
     }).start(() => {
       // 애니메이션이 완료된 후에 zIndex를 변경합니다.
@@ -79,7 +79,7 @@ const MenuBar: React.FC<{ setResetMenuBar: (resetFn: () => void) => void }> = ({
     });
     Animated.timing(overlayAnim, {
       toValue: 0,
-      duration: 800,
+      duration: 300,
       useNativeDriver: false,
     }).start();
   };

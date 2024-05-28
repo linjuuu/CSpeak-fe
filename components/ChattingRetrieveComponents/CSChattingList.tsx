@@ -40,7 +40,6 @@ const CSChattingList: React.FC = () => {
         dispatch(setCsID(csID));
         dispatch(setSelfID(""));
         dispatch(setTopicCS(""));
-        navigation.navigate('CheckRating');
     };
 
     return (

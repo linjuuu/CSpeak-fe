@@ -4,26 +4,25 @@ import { useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { setCsID, setSelfID, setTopicCS } from '../../store/actions';
 import { useNavigation } from '@react-navigation/native';
+import PrintRating from './PrintRating';
 
 const TopicList: React.FC = () => {
     const topics = [
         { id: 'total', name: '전체' }, 
         { id: 'computer_network', name: '컴퓨터네트워크' },
         { id: 'operating_system', name: '운영체제' },
-        { id: 'data_structure', name: '자료구조' },
+        { id: 'data_structure', name: '알고리즘' },
         { id: 'database', name: '데이터베이스' }, 
     ];
 
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const dispatch = useDispatch();
-    const navigation = useNavigation();
 
     const handleTopicPress = (name: string) => {
         dispatch(setTopicCS(name));
         dispatch(setCsID(""));
         dispatch(setSelfID(""));
         setSelectedTopic(name); // 선택된 토픽 업데이트
-        navigation.navigate('CheckRating');
     };
 
     return (

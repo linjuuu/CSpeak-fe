@@ -28,14 +28,18 @@ const PrintRating: React.FC = () => {
           });
           setData(response.data.data.selfIntroChats || []);
         } else {
-          response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${topicCS}`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          });
-          setData(response.data.data.csChats[0].chatHistory || []);
+          if (topicCS == "전체"){
+            console.log("전체조회");
+          }
+          else {
+            response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${topicCS}`, {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            setData(response.data.data.csChats[0].chatHistory || []);
+          }
           return;
         }
       } catch (error) {
-        
         console.error('Error fetching data:', error);
       }
     };

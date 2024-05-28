@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import SelfChattingList from './SelfChattingList'; // Replace with your actual file path
-import CSChattingList from './CSChattingList'; // Replace with your actual file path
 import TopicList from './TopicList';
 
 const SelectList: React.FC = () => {
-    const [selectedList, setSelectedList] = useState<'self' | 'cs주제별 보기' | 'cs전체보기'>('self');
+    const [selectedList, setSelectedList] = useState<'self' | 'cs주제별 보기'>('self');
 
     return (
         <>
@@ -30,7 +29,6 @@ const SelectList: React.FC = () => {
             <View style={styles.listContainer}>
                 {selectedList === 'self' && <SelfChattingList />}
                 {selectedList === 'cs주제별 보기' && <TopicList />}
-                {selectedList === 'cs전체보기' && <CSChattingList />}
             </View>
         </View>
         </>

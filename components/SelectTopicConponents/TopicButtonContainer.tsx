@@ -8,7 +8,7 @@ const TopicButtonContainer = () => {
     <View style={styles.container}>
       <TopicButton topic="컴퓨터네트워크" imageSource={require('../../assets/Network.png')} aspectRatio =  {1.2}/>
       <TopicButton topic="운영체제" imageSource={require('../../assets/OS.png')} aspectRatio =  {0.8}/>
-      <TopicButton topic="자료구조" imageSource={require('../../assets/DataStructure.png')} aspectRatio =  {0.8}/>
+      <TopicButton topic="알고리즘" imageSource={require('../../assets/DataStructure.png')} aspectRatio =  {0.8}/>
       <TopicButton topic="데이터베이스" imageSource={require('../../assets/Database.png')} aspectRatio =  {1.2}/>
     </View>
   );
