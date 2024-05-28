@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import withRedux from "../../store/withRedux";
 import { useNavigation } from "@react-navigation/native";
 import { setCsID, setSelfID, setTopicCS } from "../../store/actions";
-
-// 미리 모든 이미지를 import 합니다.
 import character1 from '../../assets/character1.png';
 import character2 from '../../assets/character2.png';
 import character3 from '../../assets/character3.png';
 import character4 from '../../assets/character4.png';
 import character5 from '../../assets/character5.png';
+import trashIcon from '../../assets/trash.png';
 
 const SelfChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
@@ -20,27 +19,27 @@ const SelfChattingList: React.FC = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchChats = async () => {
-            try {
-                console.log(accessToken);
-                const response = await axios.get('http://43.201.164.254:8080/api/v1/member/chats/self_intro', {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                });
-                console.log("자소서 전체 조회 Response:", response.data.data);
-                if (Array.isArray(response.data.data.selfIntros)) {
-                    setSelfIntros(response.data.data.selfIntros);
-                } else {
-                    setError("아무 자소서가 없습니다");
+    const fetchChats = async () => {
+        try {
+            console.log(accessToken);
+            const response = await axios.get('http://43.201.164.254:8080/api/v1/member/chats/self_intro', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
                 }
-            } catch (error) {
-                console.error('Error in SelfChattingList:', error);
-                setError("Failed to fetch self intros");
+            });
+            console.log("자소서 전체 조회 Response:", response.data.data);
+            if (Array.isArray(response.data.data.selfIntros)) {
+                setSelfIntros(response.data.data.selfIntros);
+            } else {
+                setError("아무 자소서가 없습니다");
             }
-        };
+        } catch (error) {
+            console.error('Error in SelfChattingList:', error);
+            setError("Failed to fetch self intros");
+        }
+    };
 
+    useEffect(() => {
         fetchChats();
     }, [accessToken]);
 
@@ -51,22 +50,41 @@ const SelfChattingList: React.FC = () => {
         navigation.navigate('CheckRating');
     };
 
-    // 미리 import한 이미지 배열을 생성합니다.
+    const handleDeletePress = async (chatID: string) => {
+        try {
+            console.log(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`);
+            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            console.log(response.data.data);
+            fetchChats();
+        } catch (error) {
+            console.error('Error in deleting self intro:', error.data.data);
+        }
+    };
+
     const images = [character1, character2, character3, character4, character5];
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {error && <Text style={styles.errorText}>{error}</Text>}
             {selfIntros.map((intro, index) => {
-                const randomImageIndex = Math.floor(Math.random() * 5); // 0부터 4까지의 랜덤 숫자 생성
+                const randomImageIndex = Math.floor(Math.random() * 5);
                 return (
-                    <TouchableOpacity key={intro.id} style={styles.introContainer} onPress={() => handleIntroPress(intro.id)}>
-                        <Image source={images[randomImageIndex]} style={styles.image} />
+                    <View key={intro.id} style={styles.introContainer}>
+                        <TouchableOpacity onPress={() => handleIntroPress(intro.id)}>
+                            <Image source={images[randomImageIndex]} style={styles.image} />
+                        </TouchableOpacity>
                         <View style={styles.textContainer}>
                             <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
                             <Text>작성 날짜: {intro.createdAt}</Text>
                         </View>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleDeletePress(intro.id)}>
+                            <Image source={trashIcon} style={styles.trashIcon} />
+                        </TouchableOpacity>
+                    </View>
                 );
             })}
         </ScrollView>
@@ -103,6 +121,11 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         marginBottom: 20,
+    },
+    trashIcon: {
+        width: 24,
+        height: 24,
+        tintColor: 'red',
     },
 });
 
