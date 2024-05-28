@@ -2,9 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { useSelector,useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { setCsID, setInitCS } from '../../store/actions';
+import { AntDesign } from '@expo/vector-icons';
 
 const SelfFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
@@ -30,9 +31,27 @@ const SelfFinishButton = () => {
     }
   };
 
+  const confirmLogout = () => {
+    Alert.alert(
+      "면접 종료",
+      "면접을 종료하시나요?",
+      [
+        {
+          text: "취소",
+          style: "cancel"
+        },
+        {
+          text: "확인",
+          onPress: handleFinish
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
-    <TouchableOpacity style={styles.buttonLocate} onPress={handleFinish}>
-      <Text style={styles.buttonText}>면접 종료</Text>
+    <TouchableOpacity style={styles.buttonLocate} onPress={confirmLogout}>
+      <AntDesign name = "left" size={30} color="gray" />
     </TouchableOpacity>
   );
 };
@@ -40,8 +59,8 @@ const SelfFinishButton = () => {
 const styles = StyleSheet.create({
   buttonLocate: {
     position: 'absolute',
-    top: 50,
-    right: 20,
+    top: 55,
+    left: 20,
     zIndex: 999, // 다른 요소 위로 버튼을 띄우기 위한 zIndex 설정
   },
   buttonText: {

@@ -39,23 +39,32 @@ const ChattingInputBar: React.FC<Props> = ({ onSendMessage }) => {
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
-    padding: 20,
-    position: "absolute",
-    bottom: 0,
+    padding: 10,
+    marginHorizontal : 15,
+    marginBottom: 20,
+    backgroundColor: "#fff",
+    borderRadius: 30, // 둥글게 만들기 위해 수정
+    shadowColor: "#000", // 그림자 효과 추가
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5, // 안드로이드에서의 그림자 효과를 위해 추가
   },
   input: {
     flex: 1,
+    height: 40, // 입력 폼을 위로 더 길게 수정
+    borderColor: "#ffffff",
     borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 20,
     paddingHorizontal: 10,
-    marginRight: 10,
   },
   sendButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#ffcccb", // 연한 핑크색으로 변경
     borderRadius: 20,
-    paddingVertical: 8,
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 15,
+    marginLeft: 10,
   },
   sendText: {
     color: "#fff",

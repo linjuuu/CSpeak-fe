@@ -23,18 +23,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start", // 화면 상단에 정렬
     paddingTop: 50,
     paddingBottom: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
 
   profileImage: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    marginLeft: 40,
+    marginLeft: 60,
   },
 
   profileName: {
-    fontSize: 16,
+    fontSize: 17,
+    marginLeft : 8,
     fontWeight: "bold",
   },
 });
