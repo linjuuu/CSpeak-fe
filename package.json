@@ -22,6 +22,7 @@
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.6",
+    "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-aware-scrollview": "^2.1.0",

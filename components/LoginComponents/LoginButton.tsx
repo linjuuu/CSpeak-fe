@@ -5,6 +5,7 @@ import axios from 'axios';
 import { setAccessToken, setRefreshToken, setUsername } from '../../store/actions';
 import withRedux from "../../store/withRedux";
 import { useNavigation } from "@react-navigation/native";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const LoginButton = () => {
     const ButtonImage = require('../../assets/login_button.png');
@@ -14,7 +15,7 @@ const LoginButton = () => {
     const kakaoLogin = async () => {
         const token = await KakaoLogins.login();
         const idToken = token.idToken;
-    
+     
         try {
             const response = await axios.post(
                 `http://43.201.164.254:8080/api/v1/kakao/login?idToken=${encodeURIComponent(idToken)}`,
@@ -24,7 +25,7 @@ const LoginButton = () => {
             const refreshToken = response.data.data.authTokens.refreshToken;
             const username = response.data.data.nickname;
             dispatch(setAccessToken(accessToken));
-            dispatch(setRefreshToken(refreshToken));
+            await EncryptedStorage.setItem('refreshToken' , refreshToken);
             dispatch(setUsername(username));
             console.log(username, "로그인 성공");
             navigation.replace("Home"); 
