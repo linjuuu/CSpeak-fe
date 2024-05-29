@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import axios from 'axios';
@@ -10,10 +10,8 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
   const accessToken = useSelector((state: any) => state.accessToken);
   const CsID = useSelector((state: any) => state.CsID);
   const selfID = useSelector((state: any) => state.selfID);
-  const topicCS = useSelector((state: any) => state.topicCS);
 
   useEffect(() => {
-    console.log("PrintRating 호출, 선택된 토픽:", selectedTopic);
     const fetchData = async () => {
       try { 
         let response;
@@ -29,7 +27,22 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
           setData(response.data.data.selfIntroChats || []);
         } else {
           if (selectedTopic === "전체"){
-            console.log("전체조회");
+            try {
+              const response = await axios.get('http://43.201.164.254:8080/api/v1/member/chats/cs', {
+                  headers: {
+                      Authorization: `Bearer ${accessToken}`
+                  }
+              });
+              const allData = response.data.data.csChats.reduce((acc: any[], chat: any) => {
+                if (chat.chatHistory) {
+                  return acc.concat(chat.chatHistory);
+                }
+                return acc;
+              }, []);
+              setData(allData);
+            }catch (error) {
+              console.error('Error in 전체CS :', error);
+          }
           } else {
             response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${selectedTopic}`, {
               headers: { Authorization: `Bearer ${accessToken}` },
@@ -57,13 +70,26 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
         data.map((item, index) => (
           <View key={index}>
             <View style={styles.card}>
-              <TouchableOpacity onPress={() => handlePress(index)}>
-                <Text style={styles.questionText}>{"Q.\n"} {item.question}</Text>
-              </TouchableOpacity>
+              <View style={styles.questionContainer}>
+                <Image source={require('../../assets/alphabetQ.png')} style={styles.Qimage} />
+                <Text style={styles.questionText}>{item.question}</Text>
+                <TouchableOpacity onPress={() => handlePress(index)} style={styles.toggleButton}>
+                  <Image source={require('../../assets/answerToggle.png')} style={styles.toggleImage} />
+                </TouchableOpacity>
+              </View>
               {expandedIndex === index && (
                 <View style={styles.expandedSection}>
-                  <Text style={styles.answerText}>답변: {item.answer}</Text>
-                  <Text style={styles.evaluationText}>평가: {item.evaluation}</Text>
+
+                  <View style={styles.answerContainer}>
+                    <Image source={require('../../assets/alphabetA.png')} style={styles.image} />
+                    <Text style={styles.answerText}>{item.answer}</Text>
+                  </View>
+                  <View style={styles.separator} />
+                  <View style={styles.answerContainer}>
+                    <Image source={require('../../assets/alphabetE.png')} style={styles.image} />
+                    <Text style={styles.evaluationText}>평가: {item.evaluation}</Text>
+                  </View>
+                  
                 </View>
               )}
             </View>
@@ -93,35 +119,57 @@ const styles = StyleSheet.create({
     padding: 16,
     marginVertical: 8,
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
+  },
+  questionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  Qimage : {
+    width: 30,
+    height: 30,
+    marginRight: 15,
+  },
+  image: {
+    width: 18,
+    height: 18,
+    marginRight: 15,
   },
   questionText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
+    flex: 1,
+  },
+  toggleButton: {
+    marginLeft: 10,
+  },
+  toggleImage: {
+    width: 24,
+    height: 24,
   },
   expandedSection: {
-    marginTop: 8,
-    backgroundColor: '#f0f0f0',
-    padding: 12,
-    borderRadius: 8,
+    marginTop: 20,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    padding: 20,
   },
   separator: {
     height: 1,
     backgroundColor: '#cccccc',
     marginVertical: 10,
   },
+  answerContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 7,
+  },
   answerText: {
     fontSize: 14,
-    color: '#007bff',
-    marginBottom: 8,
+    color: 'rgba(50,50,50,1)',
   },
   evaluationText: {
     fontSize: 14,
-    color: '#28a745',
+    color: 'rgba(200,50,50,0.8)',
   },
 });
 
