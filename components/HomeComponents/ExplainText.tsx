@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react";
 import withRedux from "../../store/withRedux";
 import { Text,StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 const ExplainText = () => {
-    const username = useSelector((state: any) => state.username);
+    const [username, setUsername] = useState(null);
+    const getUsername = async () => {
+        try {
+          const username = await EncryptedStorage.getItem('username');
+          if (username !== null) {
+            setUsername(username);
+          }
+        } catch (error) {
+          console.error('리프레시 토큰을 가져오는 데 실패했습니다:', error);
+        }
+      };
+    
+      useEffect(() => {
+        getUsername();
+      }, []);
     
     return(
         <>

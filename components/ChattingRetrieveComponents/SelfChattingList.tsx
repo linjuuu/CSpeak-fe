@@ -51,14 +51,14 @@ const SelfChattingList: React.FC = () => {
     };
 
     const handleDeletePress = async (chatID: string) => {
+        console.log(chatID);
         try {
-            console.log(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`);
             const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
-            console.log(response.data.data);
+            console.log("자소서 삭제 : " ,response.data.data);
             fetchChats();
         } catch (error) {
             console.error('Error in deleting self intro:', error.data.data);
@@ -78,9 +78,12 @@ const SelfChattingList: React.FC = () => {
                             <Image source={images[randomImageIndex]} style={styles.image} />
                         </TouchableOpacity>
                         <View style={styles.textContainer}>
-                            <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
-                            <Text>작성 날짜: {intro.createdAt}</Text>
+                            <TouchableOpacity onPress={() => handleIntroPress(intro.id)}>
+                                <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
+                                <Text>작성 날짜: {intro.createdAt}</Text>
+                            </TouchableOpacity>
                         </View>
+
                         <TouchableOpacity onPress={() => handleDeletePress(intro.id)}>
                             <Image source={trashIcon} style={styles.trashIcon} />
                         </TouchableOpacity>

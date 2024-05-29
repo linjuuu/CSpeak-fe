@@ -26,7 +26,7 @@ const LoginButton = () => {
             const username = response.data.data.nickname;
             dispatch(setAccessToken(accessToken));
             await EncryptedStorage.setItem('refreshToken' , refreshToken);
-            dispatch(setUsername(username));
+            await EncryptedStorage.setItem('username' , username);
             console.log(username, "로그인 성공");
             navigation.replace("Home"); 
         } catch (error) {

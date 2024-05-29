@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { setCsID, setSelfID, setTopicCS } from '../../store/actions';
-import { useNavigation } from '@react-navigation/native';
 import PrintRating from './PrintRating';
 
 const TopicList: React.FC = () => {
@@ -15,7 +14,7 @@ const TopicList: React.FC = () => {
         { id: 'database', name: '데이터베이스' }, 
     ];
 
-    const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+    const [selectedTopic, setSelectedTopic] = useState<string>('전체'); // '전체'로 초기화
     const dispatch = useDispatch();
 
     const handleTopicPress = (name: string) => {
@@ -41,14 +40,13 @@ const TopicList: React.FC = () => {
                     </View>
                 ))}
             </ScrollView>
+            <PrintRating selectedTopic={selectedTopic} />
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
-        alignItems: 'flex-start',
         padding: 20,
     },
     buttonContainer: {

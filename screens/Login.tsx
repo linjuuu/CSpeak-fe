@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import withRedux from "../store/withRedux";
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { setAccessToken } from "../store/actions";
+import { setAccessToken, setUsername } from "../store/actions";
 
 const Login = () => {
   const BackgroundImage = require('../assets/background1.png');
@@ -53,7 +53,6 @@ const Login = () => {
           navigation.replace('Home');
         } catch (error) {
           console.error('서버 응답 내용:', error.response?.data); // 서버 응답 내용 추가 출력
-          Alert.alert("Session expired", "Please log in again.");
         }
       } else if (accessToken) {
         navigation.replace('Home');

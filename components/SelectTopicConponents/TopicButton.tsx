@@ -43,9 +43,9 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, imageSource }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: '40%',
+    width: '90%',
     margin : 10,
-    aspectRatio: 1,
+    aspectRatio: 0.8,
     borderRadius: 10,
     backgroundColor: '#fff',
     alignItems: 'center',
