@@ -76,7 +76,7 @@ const TokenCheck = () => {
     if (initialCheck && refreshToken !== null && !navigationCompleted) {
       checkToken();
     }
-  }, [accessToken, refreshToken, initialCheck, navigationCompleted, dispatch, navigation]);
+  }, [ refreshToken, initialCheck, navigationCompleted, dispatch, navigation]);
 
   return (
     <View style={styles.background}>

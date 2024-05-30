@@ -11,6 +11,7 @@ import character3 from '../../assets/character3.png';
 import character4 from '../../assets/character4.png';
 import character5 from '../../assets/character5.png';
 import trashIcon from '../../assets/trash.png';
+import { interpolate } from "react-native-reanimated";
 
 const SelfChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
@@ -80,7 +81,7 @@ const SelfChattingList: React.FC = () => {
                         <View style={styles.textContainer}>
                             <TouchableOpacity onPress={() => handleIntroPress(intro.id)}>
                                 <Text style={styles.introTitle}>자기소개서 {index + 1}</Text>
-                                <Text>작성 날짜: {intro.createdAt}</Text>
+                                <Text>작성 날짜: {intro.createdAt.split('T')[0]}</Text>
                             </TouchableOpacity>
                         </View>
 

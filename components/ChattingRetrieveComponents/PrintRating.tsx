@@ -69,7 +69,7 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
                   <View style={styles.separator} />
                   <View style={styles.answerContainer}>
                     <Image source={require('../../assets/alphabetE.png')} style={styles.image} />
-                    <Text style={styles.evaluationText}>평가: {item.evaluation}</Text>
+                    <Text style={styles.evaluationText}>{item.evaluation}</Text>
                   </View>
                   
                 </View>
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 7,
+    paddingRight : '14%',
   },
   answerText: {
     fontSize: 14,

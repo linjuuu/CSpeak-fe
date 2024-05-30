@@ -10,6 +10,7 @@ import character2 from '../../assets/character2.png';
 import character3 from '../../assets/character3.png';
 import character4 from '../../assets/character4.png';
 import character5 from '../../assets/character5.png';
+import trashIcon from '../../assets/trash.png';
 
 const CSChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
@@ -48,6 +49,21 @@ const CSChattingList: React.FC = () => {
         navigation.navigate("CheckRating");
     };
 
+    const handleDeletePress = async (chatID: string) => {
+        console.log(chatID);
+        try {
+            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            console.log("자소서 삭제 : " ,response.data.data);
+            fetchChats();
+        } catch (error) {
+            console.error('Error in deleting self intro:', error.data.data);
+        }
+    };
+
     const images = [character1, character2, character3, character4, character5];
 
     return (
@@ -60,8 +76,12 @@ const CSChattingList: React.FC = () => {
                         <Image source={images[randomImageIndex]} style={styles.image} />
                         <View style={styles.textContainer}>
                             <Text style={styles.chatTitle}>{chat.topic} {index + 1}</Text>
-                            <Text>면접 날짜: {chat.createdAt}</Text>
+                            <Text>면접 날짜: {chat.createdAt.split('T')[0]}</Text>
                         </View>
+
+                        <TouchableOpacity onPress={() => handleDeletePress(chat.id)}>
+                            <Image source={trashIcon} style={styles.trashIcon} />
+                        </TouchableOpacity>
                     </TouchableOpacity>
                 );
             })}
@@ -99,6 +119,11 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         marginBottom: 20,
+    },
+    trashIcon: {
+        width: 24,
+        height: 24,
+        tintColor: 'red',
     },
 });
 
