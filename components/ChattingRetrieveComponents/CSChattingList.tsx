@@ -59,7 +59,7 @@ const CSChattingList: React.FC = () => {
                     <TouchableOpacity key={chat.id} style={styles.chatContainer} onPress={() => handleChatPress(chat.id)}>
                         <Image source={images[randomImageIndex]} style={styles.image} />
                         <View style={styles.textContainer}>
-                            <Text style={styles.chatTitle}>CS 면접 {index + 1}</Text>
+                            <Text style={styles.chatTitle}>{chat.topic} {index + 1}</Text>
                             <Text>면접 날짜: {chat.createdAt}</Text>
                         </View>
                     </TouchableOpacity>
