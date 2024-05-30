@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
 } from "react-native";
+import VoiceRecognition from "./VoiceRecognition";
 
 interface Props {
   onSendMessage: (message: string) => void;
@@ -22,15 +23,13 @@ const ChattingInputBar: React.FC<Props> = ({ onSendMessage }) => {
     }
   };
 
-  const sendMessageByVoice = () => {
-    console.log("음성 전송");
-  }
+  const handleVoiceResult = (text: string) => {
+    setMessage(text);
+  };
 
   return (
     <View style={styles.inputContainer}>
-      <TouchableOpacity style={styles.micButton} onPress={sendMessageByVoice}>
-        <Image source={require("../../assets/microphone.png")} style = {styles.sendImage}/>
-      </TouchableOpacity>
+      <VoiceRecognition onResult={handleVoiceResult}/>
       
       <TextInput
         style={styles.input}

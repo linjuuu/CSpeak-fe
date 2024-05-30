@@ -13,6 +13,8 @@ const TokenCheck = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [navigationCompleted, setNavigationCompleted] = useState(false);
+  const [initialCheck, setInitialCheck] = useState(false);
 
   const getRefreshToken = async () => {
     try {
@@ -26,45 +28,55 @@ const TokenCheck = () => {
   };
 
   useEffect(() => {
-    getRefreshToken();
+    (async () => {
+      await getRefreshToken();
+      setInitialCheck(true);
+    })();
   }, []);
 
   useEffect(() => {
     const checkToken = async () => {
-      setTimeout(async () => {
-        try {
-          if (accessToken) {
-            navigation.replace('Home');
-          } else if (refreshToken) {
-            const response = await axios.post(
-              'http://43.201.164.254:8080/api/v1/reissue',
-              {},
-              {
-                headers: {
-                  Authorization: `Bearer ${refreshToken}`,
-                }
+      await new Promise(resolve => setTimeout(resolve, 1500));  // 1.5초 지연
+      if (navigationCompleted) return;
+
+      try {
+        if ( accessToken ) {
+          console.log("액세스 토큰이 있어 Home으로 이동");
+          setNavigationCompleted(true);
+          navigation.replace('Home');
+        } else if (refreshToken) {
+          const response = await axios.post(
+            'http://43.201.164.254:8080/api/v1/reissue',
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${refreshToken}`,
               }
-            );
-            const newAccessToken = response.data.data.authTokens.accessToken;
-            const newRefreshToken = response.data.data.authTokens.refreshToken;
-            dispatch(setAccessToken(newAccessToken));
-            await EncryptedStorage.setItem('refreshToken', newRefreshToken);
-            console.log('액세스 토큰이 만료되어 리프레시토큰으로 갱신 후 Home으로 이동');
-            navigation.replace('Home');
-          } else {
-            navigation.replace('Login');
-          }
-        } catch (error) {
-          console.error('서버 응답 내용:', error.response?.data); // 서버 응답 내용 추가 출력
-          navigation.replace('Login'); // 에러 발생 시 로그인 페이지로 이동
+            }
+          );
+          const newAccessToken = response.data.data.authTokens.accessToken;
+          const newRefreshToken = response.data.data.authTokens.refreshToken;
+          dispatch(setAccessToken(newAccessToken));
+          await EncryptedStorage.setItem('refreshToken', newRefreshToken);
+          console.log('액세스 토큰이 만료되어 리프레시토큰으로 갱신 후 Home으로 이동');
+          setNavigationCompleted(true);
+          navigation.replace('Home');
+        } else {
+          setNavigationCompleted(true);
+          navigation.replace('Login');
         }
-      }, 1500); // 1.5초 지연
+      } catch (error) {
+        console.log("catch문 진입");
+        console.error('서버 응답 내용:', error.response?.data); // 서버 응답 내용 추가 출력
+        setNavigationCompleted(true);
+        navigation.replace('Login'); // 에러 발생 시 로그인 페이지로 이동
+      }
     };
 
-    if (refreshToken !== null || accessToken !== null) {
+    if (initialCheck && refreshToken !== null && !navigationCompleted) {
       checkToken();
     }
-  }, [accessToken, refreshToken, dispatch]);
+  }, [accessToken, refreshToken, initialCheck, navigationCompleted, dispatch, navigation]);
 
   return (
     <View style={styles.background}>

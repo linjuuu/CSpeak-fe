@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image,
 import Voice from "@react-native-voice/voice";
 
 const Test = () => {
-  const [messages, setMessages] = useState([]);
   const [isListening, setIsListening] = useState(false);
   const [recognizedText, setRecognizedText] = useState("");
 
@@ -61,32 +60,10 @@ const Test = () => {
     }
   };
 
-  const sendMessage = () => {
-    if (recognizedText) {
-      setMessages([...messages, { text: recognizedText, sender: "user" }]);
-      setRecognizedText("");
-    }
-  };
 
   return (
     <View style={styles.container}>
-      <SafeAreaView />
-      <ScrollView contentContainerStyle={styles.messagesContainer}>
-        {messages.map((message, index) => (
-          <View
-            key={index}
-            style={[
-              styles.messageBubble,
-              {
-                alignSelf: message.sender === "user" ? "flex-end" : "flex-start",
-                backgroundColor: message.sender === "user" ? "#BB2525" : "#141E46",
-              },
-            ]}
-          >
-            <Text style={styles.messageText}>{message.text}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -111,9 +88,7 @@ const Test = () => {
             />
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-          <Text style={styles.sendButtonText}>Send</Text>
-        </TouchableOpacity>
+        
       </View>
     </View>
   );

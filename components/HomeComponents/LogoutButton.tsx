@@ -5,6 +5,7 @@ import withRedux from '../../store/withRedux';
 import { TouchableOpacity, Image, StyleSheet, Alert,Text } from 'react-native';
 import { setAccessToken, setRefreshToken } from '../../store/actions';
 import { useNavigation } from '@react-navigation/native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const LogoutButton = () => {
   const accessToken = useSelector((state: any) => state.accessToken);
@@ -22,6 +23,8 @@ const LogoutButton = () => {
       console.log('Logout successful:', response.data);
       dispatch(setAccessToken(""));
       dispatch(setRefreshToken(""));
+      EncryptedStorage.setItem("refreshToken" , "");
+
       navigation.replace('Login');
     } catch (error) {
       console.error('Error during logout:', error.response.data);

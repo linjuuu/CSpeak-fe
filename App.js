@@ -20,7 +20,7 @@ export default function App() {
 
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TokenCheck">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Test" component={Test} options={{headerShown: false}}/>
         <Stack.Screen name="TokenCheck" component={TokenCheck} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
