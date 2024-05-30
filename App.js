@@ -1,3 +1,4 @@
+import TokenCheck from "./screens/TokenCheck";
 import Login from "./screens/Login";
 import Interview from "./screens/Interview";
 import Home from "./screens/Home";
@@ -19,8 +20,9 @@ export default function App() {
 
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Test">
+      <Stack.Navigator initialRouteName="TokenCheck">
         <Stack.Screen name="Test" component={Test} options={{headerShown: false}}/>
+        <Stack.Screen name="TokenCheck" component={TokenCheck} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
         <Stack.Screen name="Interview" component={Interview} options={{headerShown: false}}/>
