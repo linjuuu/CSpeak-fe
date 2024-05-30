@@ -22,15 +22,42 @@ const CSFinishButton = () => {
       });
 
       console.log('chatting finish :', response.data);
-      dispatch(setCsID(""));
       dispatch(setInitCS(""));
       dispatch(setTopicCS(""));
       dispatch(setInitCS(""));
-      navigation.replace('Home');
+      homeOrRating();
     } catch (error) {
       // 오류 처리
       console.error('Error chatting finish :', error.response.data);
     }
+  };
+
+  const goHome = () => {
+    dispatch(setCsID(""));
+    navigation.replace('Home');
+  }
+
+  const goRating = () => {
+    navigation.replace('CheckRating');
+  }
+
+  const homeOrRating = () => {
+    Alert.alert(
+      "면접이 종료되었습니다 !",
+      "면접 결과를 확인하시겠습니까?",
+      [
+        {
+          text: "홈으로",
+          style: "cancel",
+          onPress : goHome
+        },
+        {
+          text: "결과 확인하기",
+          onPress: goRating
+        }
+      ],
+      { cancelable: false }
+    );
   };
 
   const confirmLogout = () => {

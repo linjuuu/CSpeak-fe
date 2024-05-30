@@ -109,7 +109,7 @@ const ChattingBoard: React.FC = () => {
       <View style={styles.loadingContainer}>
         <View style={styles.loadingOverlay} />
         <ActivityIndicator size="large" color="#ffffff" />
-        <Text style={styles.loadingText}>첫 질문을 준비하는 중 ...</Text>
+        <Text style={styles.loadingText}>면접을 준비하는 중 ...</Text>
       </View>
     );
   }
