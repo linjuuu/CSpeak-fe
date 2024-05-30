@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { setCsID, setSelfID, setTopicCS } from '../../store/actions';
-import PrintRating from './PrintRating';
+import CSTopicChattingList from './CSTopicChattingList';
 import CSChattingList from './CSChattingList';
 
 const TopicList: React.FC = () => {
@@ -19,10 +19,12 @@ const TopicList: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleTopicPress = (name: string) => {
-        dispatch(setTopicCS(name));
-        dispatch(setCsID(""));
-        dispatch(setSelfID(""));
-        setSelectedTopic(name);
+        if (selectedTopic !== name) {
+            dispatch(setTopicCS(name));
+            dispatch(setCsID(""));
+            dispatch(setSelfID(""));
+            setSelectedTopic(name);
+        }
     };
 
     return (
@@ -41,7 +43,12 @@ const TopicList: React.FC = () => {
                     </View>
                 ))}
             </ScrollView>
-            {selectedTopic === '전체' ? <CSChattingList /> : <PrintRating selectedTopic={selectedTopic} />}
+            {
+                // 확실한 리렌더링을 위해 selectedTopic에 따라 키 값을 할당하여 조건부 렌더링
+                selectedTopic === '전체'
+                ? <CSChattingList key="cslist" />
+                : <CSTopicChattingList key={selectedTopic} selectedTopic={selectedTopic} />
+            }
         </ScrollView>
     );
 };
