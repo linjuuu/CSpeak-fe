@@ -26,31 +26,13 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
           });
           setData(response.data.data.selfIntroChats || []);
         } else {
-          if (selectedTopic === "전체"){
-            try {
-              const response = await axios.get('http://43.201.164.254:8080/api/v1/member/chats/cs', {
-                  headers: {
-                      Authorization: `Bearer ${accessToken}`
-                  }
-              });
-              const allData = response.data.data.csChats.reduce((acc: any[], chat: any) => {
-                if (chat.chatHistory) {
-                  return acc.concat(chat.chatHistory);
-                }
-                return acc;
-              }, []);
-              setData(allData);
-            }catch (error) {
-              console.error('Error in 전체CS :', error);
-          }
-          } else {
             response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${selectedTopic}`, {
               headers: { Authorization: `Bearer ${accessToken}` },
             });
             setData(response.data.data.csChats[0].chatHistory || []);
           }
         }
-      } catch (error) {
+      catch (error) {
         console.error('Error fetching data:', error);
         setData([]);
       }

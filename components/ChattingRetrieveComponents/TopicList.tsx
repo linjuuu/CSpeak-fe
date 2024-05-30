@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import withRedux from '../../store/withRedux';
 import { setCsID, setSelfID, setTopicCS } from '../../store/actions';
 import PrintRating from './PrintRating';
+import CSChattingList from './CSChattingList';
 
 const TopicList: React.FC = () => {
     const topics = [
@@ -14,14 +15,14 @@ const TopicList: React.FC = () => {
         { id: 'database', name: '데이터베이스' }, 
     ];
 
-    const [selectedTopic, setSelectedTopic] = useState<string>('전체'); // '전체'로 초기화
+    const [selectedTopic, setSelectedTopic] = useState<string>('전체');
     const dispatch = useDispatch();
 
     const handleTopicPress = (name: string) => {
         dispatch(setTopicCS(name));
         dispatch(setCsID(""));
         dispatch(setSelfID(""));
-        setSelectedTopic(name); // 선택된 토픽 업데이트
+        setSelectedTopic(name);
     };
 
     return (
@@ -40,7 +41,7 @@ const TopicList: React.FC = () => {
                     </View>
                 ))}
             </ScrollView>
-            <PrintRating selectedTopic={selectedTopic} />
+            {selectedTopic === '전체' ? <CSChattingList /> : <PrintRating selectedTopic={selectedTopic} />}
         </ScrollView>
     );
 };
