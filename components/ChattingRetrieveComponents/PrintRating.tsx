@@ -51,11 +51,11 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
       ) : (
         data.map((item, index) => (
           <View key={index}>
-            <View style={styles.card}>
+            <TouchableOpacity onPress={() => handlePress(index)} style={styles.card} >
               <View style={styles.questionContainer}>
                 <Image source={require('../../assets/alphabetQ.png')} style={styles.Qimage} />
                 <Text style={styles.questionText}>{item.question}</Text>
-                <TouchableOpacity onPress={() => handlePress(index)} style={styles.toggleButton}>
+                <TouchableOpacity  style={styles.toggleButton} onPress={() => handlePress(index)}>
                   <Image source={require('../../assets/answerToggle.png')} style={styles.toggleImage} />
                 </TouchableOpacity>
               </View>
@@ -74,7 +74,7 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
                   
                 </View>
               )}
-            </View>
+            </TouchableOpacity>
             {index < data.length - 1 && <View style={styles.separator} />}
           </View>
         ))

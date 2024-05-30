@@ -26,7 +26,7 @@ const TopicList: React.FC = () => {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView>
             <ScrollView horizontal contentContainerStyle={styles.buttonContainer} showsHorizontalScrollIndicator={false}>
                 {topics.map(topic => (
                     <View key={topic.id} style={styles.buttonWrapper}>
@@ -47,9 +47,6 @@ const TopicList: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-    },
     buttonContainer: {
         flexDirection: 'row',
         flexWrap: 'nowrap',
