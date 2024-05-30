@@ -39,7 +39,6 @@ const SelfChattingList: React.FC = () => {
             setError("Failed to fetch self intros");
         }
     };
-
     useEffect(() => {
         fetchChats();
     }, [accessToken]);

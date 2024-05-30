@@ -19,25 +19,25 @@ const CSTopicChattingList: React.FC<{ selectedTopic: string }> = ({ selectedTopi
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchChats = async () => {
-            try {
-                const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${selectedTopic}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                });
-                console.log(`CS ${selectedTopic}  조회 Response:`, response.data.data);
-                if (Array.isArray(response.data.data.csChats)) {
-                    setCsChats(response.data.data.csChats);
-                } else {
-                    setError("아무 대화가 없습니다");
+    const fetchChats = async () => {
+        try {
+            const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/chats/cs/${selectedTopic}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
                 }
-            } catch (error) {
-                console.error('Error in CSTopicChattingList:', error);
-                setError("Failed to fetch chats");
+            });
+            console.log(`CS ${selectedTopic}  조회 Response:`, response.data.data);
+            if (Array.isArray(response.data.data.csChats)) {
+                setCsChats(response.data.data.csChats);
+            } else {
+                setError("아무 대화가 없습니다");
             }
-        };
+        } catch (error) {
+            console.error('Error in CSTopicChattingList:', error);
+            setError("Failed to fetch chats");
+        }
+    };
+    useEffect(() => {
 
         fetchChats();
     }, [accessToken]);
@@ -50,17 +50,17 @@ const CSTopicChattingList: React.FC<{ selectedTopic: string }> = ({ selectedTopi
     };
 
     const handleDeletePress = async (chatID: string) => {
-        console.log(chatID);
+        console.log(selectedTopic , chatID);
         try {
-            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/self_intro/${chatID}`, {
+            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/cs/${chatID}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
-            console.log("자소서 삭제 : " ,response.data.data);
+            console.log("cs 삭제 : " ,response.data.data);
             fetchChats();
         } catch (error) {
-            console.error('Error in deleting self intro:', error.data.data);
+            console.error('Error in deleting cs intro:', error.data.data);
         }
     };
 

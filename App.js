@@ -12,8 +12,6 @@ import SelectTopic from "./screens/SelectTopic";
 import SelfInterview from "./screens/SelfInterview";
 import CheckRating from "./screens/CheckRating";
 
-import Test from "./screens/Test";
-
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -21,7 +19,6 @@ export default function App() {
   return(
     <NavigationContainer>
       <Stack.Navigator initialRouteName="TokenCheck">
-        <Stack.Screen name="Test" component={Test} options={{headerShown: false}}/>
         <Stack.Screen name="TokenCheck" component={TokenCheck} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
