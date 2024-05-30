@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  Platform,
-  PermissionsAndroid,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, SafeAreaView, Platform, PermissionsAndroid } from "react-native";
 import Voice from "@react-native-voice/voice";
 
 const Test = () => {
@@ -22,13 +11,11 @@ const Test = () => {
     Voice.onSpeechStart = onSpeechStart;
     Voice.onSpeechEnd = stopListening;
     Voice.onSpeechResults = onSpeechResults;
-    Voice.onSpeechError = (error) => console.log("onSpeechError:", error);
+    Voice.onSpeechError = onSpeechError;
 
     const androidPermissionChecking = async () => {
       if (Platform.OS === "android") {
-        const hasPermission = await PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
-        );
+        const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
         console.log("Android permission check: ", hasPermission);
       }
     };
@@ -49,23 +36,28 @@ const Test = () => {
     setRecognizedText(text);
   };
 
+  const onSpeechError = (error) => {
+    console.log("onSpeechError:", error);
+  };
+
   const startListening = async () => {
+    console.log("Starting to listen...");
     setIsListening(true);
     try {
-      // await Voice.start("en-US");
       await Voice.start("ko-KR");
     } catch (error) {
-      console.log("line error ~ : ", error);
+      console.log("startListening error: ", error);
     }
   };
 
   const stopListening = async () => {
+    console.log("Stopping listening...");
     try {
       await Voice.stop();
-      Voice.removeAllListeners();
+      await Voice.cancel();
       setIsListening(false);
     } catch (error) {
-      console.log("line error ~ : ", error);
+      console.log("stopListening error: ", error);
     }
   };
 
@@ -86,10 +78,8 @@ const Test = () => {
             style={[
               styles.messageBubble,
               {
-                alignSelf:
-                  message.sender === "user" ? "flex-end" : "flex-start",
-                backgroundColor:
-                  message.sender === "user" ? "#BB2525" : "#141E46",
+                alignSelf: message.sender === "user" ? "flex-end" : "flex-start",
+                backgroundColor: message.sender === "user" ? "#BB2525" : "#141E46",
               },
             ]}
           >

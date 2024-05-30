@@ -13,6 +13,7 @@
       "**/*"
     ],
     "plugins": [
+      "@react-native-voice/voice",
       [
         "@react-native-seoul/kakao-login",
         {

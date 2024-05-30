@@ -11,13 +11,16 @@ import SelectTopic from "./screens/SelectTopic";
 import SelfInterview from "./screens/SelfInterview";
 import CheckRating from "./screens/CheckRating";
 
+import Test from "./screens/Test";
+
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Test">
+        <Stack.Screen name="Test" component={Test} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
         <Stack.Screen name="Interview" component={Interview} options={{headerShown: false}}/>
