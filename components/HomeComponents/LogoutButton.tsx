@@ -24,7 +24,6 @@ const LogoutButton = () => {
       dispatch(setAccessToken(""));
       dispatch(setRefreshToken(""));
       EncryptedStorage.setItem("refreshToken" , "");
-
       navigation.replace('Login');
     } catch (error) {
       console.error('Error during logout:', error.response.data);
