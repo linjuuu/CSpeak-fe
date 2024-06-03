@@ -1,6 +1,5 @@
 import { Text,ImageBackground,StyleSheet } from "react-native"
 import TopicButtonContainer from "../components/SelectTopicConponents/TopicButtonContainer";
-import GoBackButton from "../components/OtherComponents/GoBackButton";
 
 export default function SelectTopic() {
 
