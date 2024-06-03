@@ -24,11 +24,13 @@ const CSFinishButton = () => {
       console.log('chatting finish :', response.data);
       dispatch(setInitCS(""));
       dispatch(setTopicCS(""));
-      dispatch(setInitCS(""));
       homeOrRating();
     } catch (error) {
-      // 오류 처리
-      console.error('Error chatting finish :', error.response.data);
+      if ( error.response.data.code){
+        dispatch(setInitCS(""));
+        navigation.replace('Home');
+      }
+      
     }
   };
 

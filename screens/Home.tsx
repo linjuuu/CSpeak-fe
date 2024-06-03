@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
         width: '80%',
         height: '30%',
         resizeMode: 'contain',
-        // zIndex 추가
         zIndex: 1,
     }
 });

@@ -9,7 +9,7 @@ import withRedux from '../../store/withRedux';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const menuWidth = windowWidth * (4 / 5);  // 메뉴바 너비를 전체 화면의 4/5로 설정
+const menuWidth = windowWidth * (4 / 5);  
 
 
 const MenuBar: React.FC<{ setResetMenuBar: (resetFn: () => void) => void }> = ({ setResetMenuBar }) => {
@@ -126,7 +126,6 @@ const MenuBar: React.FC<{ setResetMenuBar: (resetFn: () => void) => void }> = ({
       duration: 300,
       useNativeDriver: false,
     }).start(() => {
-      // 애니메이션이 완료된 후에 zIndex를 변경합니다.
       setContainerZIndex(0);
     });
     Animated.timing(overlayAnim, {
@@ -143,7 +142,6 @@ const MenuBar: React.FC<{ setResetMenuBar: (resetFn: () => void) => void }> = ({
       </TouchableOpacity>
       {isMenuOpen && (
         <>
-          {/* 로그아웃 버튼를 오버레이 밑으로 이동 */}
           <Pressable style={styles.overlay} onPress={closeMenu}>
             <Animated.View style={{
               ...styles.overlay,

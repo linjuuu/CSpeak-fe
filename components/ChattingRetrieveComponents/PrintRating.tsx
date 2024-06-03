@@ -54,7 +54,9 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
             <TouchableOpacity onPress={() => handlePress(index)} style={styles.card} >
               <View style={styles.questionContainer}>
                 <Image source={require('../../assets/alphabetQ.png')} style={styles.Qimage} />
+
                 <Text style={styles.questionText}>{item.question}</Text>
+
                 <TouchableOpacity  style={styles.toggleButton} onPress={() => handlePress(index)}>
                   <Image source={require('../../assets/answerToggle.png')} style={styles.toggleImage} />
                 </TouchableOpacity>
@@ -64,12 +66,16 @@ const PrintRating: React.FC<{ selectedTopic: string }> = ({ selectedTopic }) => 
 
                   <View style={styles.answerContainer}>
                     <Image source={require('../../assets/alphabetA.png')} style={styles.image} />
+
                     <Text style={styles.answerText}>{item.answer}</Text>
+
                   </View>
                   <View style={styles.separator} />
                   <View style={styles.answerContainer}>
                     <Image source={require('../../assets/alphabetE.png')} style={styles.image} />
+
                     <Text style={styles.evaluationText}>{item.evaluation}</Text>
+                    
                   </View>
                   
                 </View>
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     flex: 1,
+    lineHeight: 24
   },
   toggleButton: {
     marginLeft: 10,
@@ -149,10 +156,12 @@ const styles = StyleSheet.create({
   answerText: {
     fontSize: 14,
     color: 'rgba(50,50,50,1)',
+    lineHeight: 24
   },
   evaluationText: {
     fontSize: 14,
     color: 'rgba(200,50,50,0.8)',
+    lineHeight: 24
   },
 });
 

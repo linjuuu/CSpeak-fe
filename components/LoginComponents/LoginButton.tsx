@@ -2,7 +2,7 @@ import { StyleSheet, Pressable, Image, View } from "react-native";
 import { useDispatch } from "react-redux";
 import * as KakaoLogins from "@react-native-seoul/kakao-login";
 import axios from 'axios';
-import { setAccessToken, setRefreshToken, setUsername } from '../../store/actions';
+import { setAccessToken} from '../../store/actions';
 import withRedux from "../../store/withRedux";
 import { useNavigation } from "@react-navigation/native";
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -24,10 +24,12 @@ const LoginButton = () => {
             const accessToken = response.data.data.authTokens.accessToken;
             const refreshToken = response.data.data.authTokens.refreshToken;
             const username = response.data.data.nickname;
+
             dispatch(setAccessToken(accessToken));
             await EncryptedStorage.setItem('refreshToken' , refreshToken);
             await EncryptedStorage.setItem('username' , username);
-            console.log(username, "로그인 성공");
+            
+            console.log(username, "의 로그인");
             navigation.replace("Home"); 
         } catch (error) {
             console.error('Error while logging in:', error);
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
         marginTop: 100,
     },
     buttonContainer: {
-        elevation: 5, // 그림자의 깊이를 조절합니다.
+        elevation: 5, 
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
