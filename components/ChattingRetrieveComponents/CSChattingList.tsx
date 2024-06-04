@@ -14,6 +14,7 @@ import trashIcon from '../../assets/trash.png';
 
 const CSChattingList: React.FC = () => {
     const accessToken = useSelector((state: any) => state.accessToken);
+    const topic = useSelector((state: any) => state.topic);
     const [csChats, setCsChats] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
     const navigation = useNavigation();
@@ -51,17 +52,26 @@ const CSChattingList: React.FC = () => {
     const handleDeletePress = async (chatID: string) => {
         console.log(chatID);
         try {
-            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/cs/${chatID}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
+
+            const response = await axios.post(
+                `http://43.201.164.254:8080/api/v1/member/cs`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                  body :{
+                    chatRoomId : chatID,
+                    topic : topic,
+                  }
                 }
-            });
+              );
+
+
             console.log("CS 삭제 : " ,response.data.data);
             fetchChats();
         } catch (error) {
             console.error('Error in deleting cs:', error.data.data);
         }
-    };
 
     const images = [character1, character2, character3, character4, character5];
 

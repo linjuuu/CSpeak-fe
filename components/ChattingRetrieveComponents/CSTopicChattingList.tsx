@@ -52,10 +52,13 @@ const CSTopicChattingList: React.FC<{ selectedTopic: string }> = ({ selectedTopi
     const handleDeletePress = async (chatID: string) => {
         console.log(selectedTopic , chatID);
         try {
-            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/cs/${chatID}`, {
+            const response = await axios.delete(`http://43.201.164.254:8080/api/v1/member/cs/${chatID}`, 
+            {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                
+                
             });
             console.log("cs 삭제 : " ,response.data.data);
             fetchChats();

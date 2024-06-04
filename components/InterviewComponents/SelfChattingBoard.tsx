@@ -59,12 +59,16 @@ const ChattingBoard: React.FC = () => {
     setTypingIndicator(".");
 
     try {
-      const response = await axios.get(
-        `http://43.201.164.254:8080/api/v1/member/chat/self_intro/${selfID}?client_answer=${newMessage}`,
+      const response = await axios.post(
+        `http://43.201.164.254:8080/api/v1/member/chat/self_intro`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          body :{
+            chatRoomId : selfID,
+            clientAnswer : newMessage,
+          }
         }
       );
       setTypingIndicator("");

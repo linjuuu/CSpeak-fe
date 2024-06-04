@@ -11,14 +11,20 @@ const CSFinishButton = () => {
   // 액세스 토큰을 Redux 스토어에서 가져옵니다.
   const accessToken = useSelector((state: any) => state.accessToken);
   const CsID = useSelector((state: any) => state.CsID);
+  const topic = useSelector((state: any) => state.topic);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const handleFinish = async () => {
     try {
-      const response = await axios.post(`http://43.201.164.254:8080/api/v1/member/end/chat/cs/${CsID}`, {}, {
+      const response = await axios.post(`http://43.201.164.254:8080/api/v1/member/end/chat/cs`, 
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
+        body : {
+          chatRoomId : CsID,
+          topic : topic,
+        }
       });
 
       console.log('chatting finish :', response.data);

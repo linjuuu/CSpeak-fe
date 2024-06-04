@@ -21,9 +21,13 @@ interface FinishButtonProps {
 
       try {
           navigation.replace('SelfInterview');
-          const response = await axios.get(`http://43.201.164.254:8080/api/v1/member/initial/chat/self_intro?question=${introTitle}&content=${introText}`, {
+          const response = await axios.post(`http://43.201.164.254:8080/api/v1/member/initial/chat/self_intro`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+            },
+            body: {
+              question: introTitle,
+              content : introText,
             },
           });
           console.log("첫질문 : ", response.data.data.question);
